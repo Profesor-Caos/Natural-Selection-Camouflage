@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://SpinBoxSlider.cs" type="Script" id=1]
+
+[node name="SpinBoxSlider" type="GridContainer"]
+anchor_right = 1.0
+margin_bottom = 44.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="HSlider" type="HSlider" parent="."]
+margin_right = 78.0
+margin_bottom = 16.0
+max_value = 200.0
+
+[node name="GridContainer" type="GridContainer" parent="."]
+margin_top = 20.0
+margin_right = 78.0
+margin_bottom = 44.0
+columns = 2
+
+[node name="Label" type="Label" parent="GridContainer"]
+margin_top = 5.0
+margin_bottom = 19.0
+
+[node name="SpinBox" type="SpinBox" parent="GridContainer"]
+margin_left = 4.0
+margin_right = 78.0
+margin_bottom = 24.0
+grow_horizontal = 0
+size_flags_horizontal = 8
+max_value = 200.0
+value = 50.0
+
+[connection signal="value_changed" from="HSlider" to="." method="OnHSliderValueChanged"]
+[connection signal="value_changed" from="GridContainer/SpinBox" to="." method="OnSpinBoxValueChanged"]
