@@ -3,9 +3,6 @@ using System;
 
 public class InitialSettings : GridContainer
 {
-	// Declare member variables here. Examples:
-	// private int a = 2;
-	// private string b = "text";
 	private int maxWidth = 0;
 
 	// Called when the node enters the scene tree for the first time.
@@ -36,7 +33,6 @@ public class InitialSettings : GridContainer
 		var aaMSpinBox = GetNode<SpinBoxSlider>("aa Males").GetNode<SpinBox>("GridContainer/SpinBox");
 		aaMSpinBox.MarginLeft = maxWidth - (int)aaMSpinBox.RectSize.x;
 		aaMSpinBox.MarginRight = maxWidth;
-
 
 		var AaFSlider = GetNode<SpinBoxSlider>("Aa Females").GetNode<Slider>("HSlider");
 		AaFSlider.MarginRight = maxWidth;
