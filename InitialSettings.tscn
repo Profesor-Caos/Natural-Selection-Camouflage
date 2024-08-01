@@ -1,55 +1,47 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://SpinBoxSlider.tscn" type="PackedScene" id=1]
-[ext_resource path="res://InitialSettings.cs" type="Script" id=2]
 
-[node name="InitialSettings" type="GridContainer"]
+[node name="InitialSettings" type="VBoxContainer"]
 margin_right = 40.0
 margin_bottom = 40.0
-script = ExtResource( 2 )
 
 [node name="AA Males" parent="." instance=ExtResource( 1 )]
-anchor_right = 0.0
-margin_right = 78.0
+margin_right = 82.0
 Value = 50
 Label = "Homozygous Dominant Males"
 
 [node name="Aa Males" parent="." instance=ExtResource( 1 )]
-anchor_right = 0.0
 margin_top = 48.0
-margin_right = 78.0
+margin_right = 82.0
 margin_bottom = 92.0
 Value = 50
 Label = "Heterozygous Males"
 
 [node name="aa Males" parent="." instance=ExtResource( 1 )]
-anchor_right = 0.0
 margin_top = 96.0
-margin_right = 78.0
+margin_right = 82.0
 margin_bottom = 140.0
 Value = 50
 Label = "Homozygous Recessive Males"
 
 [node name="AA Females" parent="." instance=ExtResource( 1 )]
-anchor_right = 0.0
 margin_top = 144.0
-margin_right = 78.0
+margin_right = 82.0
 margin_bottom = 188.0
 Value = 50
 Label = "Homozygous Dominant Females"
 
 [node name="Aa Females" parent="." instance=ExtResource( 1 )]
-anchor_right = 0.0
 margin_top = 192.0
-margin_right = 78.0
+margin_right = 82.0
 margin_bottom = 236.0
 Value = 50
 Label = "Heterozygous Females"
 
 [node name="aa Females" parent="." instance=ExtResource( 1 )]
-anchor_right = 0.0
 margin_top = 240.0
-margin_right = 78.0
+margin_right = 82.0
 margin_bottom = 284.0
 Value = 50
 Label = "Homozygous Recessive Females"

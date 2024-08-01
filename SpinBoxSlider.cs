@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class SpinBoxSlider : GridContainer
+public partial class SpinBoxSlider : VBoxContainer
 {
 	private int _value;
 	[Export]
@@ -11,9 +11,9 @@ public partial class SpinBoxSlider : GridContainer
 		set
 		{
 			_value = value;
-			HSlider slider = GetNode<HSlider>(nameof(HSlider));
+			HSlider slider = GetNode<HSlider>($"{nameof(HSlider)}");
 			slider.Value = value;
-			SpinBox spinBox = GetNode<SpinBox>($"{nameof(GridContainer)}/{nameof(SpinBox)}");
+			SpinBox spinBox = GetNode<SpinBox>($"{nameof(HBoxContainer)}/{nameof(SpinBox)}");
 			spinBox.Value = value;
 		}
 	}
@@ -26,7 +26,7 @@ public partial class SpinBoxSlider : GridContainer
 		set
 		{
 			_label = value;
-			Label label = GetNode<Label>($"{nameof(GridContainer)}/{nameof(Label)}");
+			Label label = GetNode<Label>($"{nameof(HBoxContainer)}/{nameof(Label)}");
 			label.Text = value;
 		}
 	}
@@ -34,20 +34,22 @@ public partial class SpinBoxSlider : GridContainer
 	private void OnSpinBoxValueChanged(float value)
 	{
 		_value = (int)value;
-		HSlider slider = GetNode<HSlider>(nameof(HSlider));
+		HSlider slider = GetNode<HSlider>($"{nameof(HSlider)}");
 		slider.Value = value;
 	}
 	
 	private void OnHSliderValueChanged(float value)
 	{
 		_value = (int)value;
-		SpinBox spinBox = GetNode<SpinBox>($"{nameof(GridContainer)}/{nameof(SpinBox)}");
+		SpinBox spinBox = GetNode<SpinBox>($"{nameof(HBoxContainer)}/{nameof(SpinBox)}");
 		spinBox.Value = value;
 	}
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		SpinBox spinBox = GetNode<SpinBox>($"{nameof(HBoxContainer)}/{nameof(SpinBox)}");
+		spinBox.SetAnchorsPreset(LayoutPreset.TopRight);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

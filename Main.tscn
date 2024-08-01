@@ -18,7 +18,7 @@ margin_bottom = 44.0
 rect_min_size = Vector2( 650, 0 )
 
 [node name="Buttons" parent="VBoxContainer/HBoxContainer" instance=ExtResource( 4 )]
-margin_right = 120.0
+margin_right = 219.0
 margin_bottom = 44.0
 rect_min_size = Vector2( 50, 0 )
 
