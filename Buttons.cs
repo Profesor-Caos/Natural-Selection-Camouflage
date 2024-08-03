@@ -1,18 +1,14 @@
 using Godot;
 using System;
 
-public class Main : Node
+public class Buttons : HBoxContainer
 {
-	[Export]
-	public PackedScene MouseScene;
+	[Signal]
+	public delegate void SetupPressed();
 
 	private void OnSetupPressed()
 	{
-		Mouse mouse = MouseScene.Instance() as Mouse;
-		Node canvas = GetNode($"{nameof(VBoxContainer)}/HBoxContainer2/Canvas");
-		Polygon2D poly = canvas.GetNode<Polygon2D>($"Canvas");
-		mouse.Position = poly.Position;
-		canvas.AddChild(mouse);
+		EmitSignal("SetupPressed");
 	}
 
 	// Called when the node enters the scene tree for the first time.

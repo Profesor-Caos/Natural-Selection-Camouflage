@@ -1,8 +1,11 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Buttons.cs" type="Script" id=1]
 
 [node name="Buttons" type="HBoxContainer"]
 margin_right = 40.0
 margin_bottom = 40.0
+script = ExtResource( 1 )
 
 [node name="Setup" type="Button" parent="."]
 margin_right = 48.0
@@ -31,3 +34,5 @@ margin_left = 124.0
 margin_right = 219.0
 margin_bottom = 44.0
 text = "Predation?"
+
+[connection signal="pressed" from="Setup" to="." method="OnSetupPressed"]
