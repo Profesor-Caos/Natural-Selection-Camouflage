@@ -8,6 +8,8 @@ public class Main : Node
 
 	private void OnSetupPressed()
 	{
+		InitialSettings settings = GetNode<InitialSettings>("VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/InitialSettings");
+
 		Mouse mouse = MouseScene.Instance() as Mouse;
 		Node canvas = GetNode($"{nameof(VBoxContainer)}/HBoxContainer2/Canvas");
 		Polygon2D poly = canvas.GetNode<Polygon2D>($"Canvas");
