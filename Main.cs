@@ -14,7 +14,8 @@ public class Main : Node
 		Node canvas = GetNode($"{nameof(VBoxContainer)}/HBoxContainer2/Canvas");
 		Polygon2D poly = canvas.GetNode<Polygon2D>($"Canvas");
 		mouse.Position = poly.Position;
-		canvas.AddChild(mouse);
+		
+        poly.AddChild(mouse);
 	}
 
 	// Called when the node enters the scene tree for the first time.
