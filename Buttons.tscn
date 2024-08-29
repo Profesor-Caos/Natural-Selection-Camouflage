@@ -36,3 +36,4 @@ margin_bottom = 44.0
 text = "Predation?"
 
 [connection signal="pressed" from="Setup" to="." method="OnSetupPressed"]
+[connection signal="pressed" from="VBoxContainer/Go Once" to="." method="OnGoOncePressed"]

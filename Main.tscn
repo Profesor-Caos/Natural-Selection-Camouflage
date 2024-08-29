@@ -55,4 +55,5 @@ rect_min_size = Vector2( 520, 520 )
 size_flags_horizontal = 2
 size_flags_vertical = 2
 
+[connection signal="GoOncePressed" from="VBoxContainer/HBoxContainer/Buttons" to="." method="OnGoOncePressed"]
 [connection signal="SetupPressed" from="VBoxContainer/HBoxContainer/Buttons" to="." method="OnSetupPressed"]
