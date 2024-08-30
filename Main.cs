@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 public class Main : Node
 {
+	private bool _isGoActive = false;
+
 	[Export]
 	public PackedScene MouseScene;
 
@@ -100,6 +102,46 @@ public class Main : Node
 		newGeneration.ForEach(m => poly.AddChild(m));
 	}
 
+	private void CountMice()
+	{
+		int homoDMales = 0;
+		int homoRMales = 0;
+		int hetMales = 0;
+		int homoDFemales = 0;
+		int homoRFemales = 0;
+		int hetFemales = 0;
+        var mice = GetTree().GetNodesInGroup("mice");
+        foreach (Mouse mouse in mice)
+        {
+            if (mouse.Sex == Sex.Female)
+			{
+				if (mouse.Genotype == Genotype.AA)
+					homoDFemales += 1;
+				else if (mouse.Genotype == Genotype.aa) 
+					homoRFemales += 1;
+				else 
+					hetFemales += 1;
+			}
+			else
+			{
+                if (mouse.Genotype == Genotype.AA)
+                    homoDMales += 1;
+                else if (mouse.Genotype == Genotype.aa)
+                    homoRMales += 1;
+                else
+                    hetMales += 1;
+            }
+        }
+
+		Data data = GetNode<Data>("VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/Data");
+        data.UpdateData(homoDMales, "AA Males");
+        data.UpdateData(homoRMales, "aa Males");
+        data.UpdateData(hetMales, "Aa Males");
+        data.UpdateData(homoDMales, "AA Females");
+        data.UpdateData(homoRFemales, "aa Females");
+        data.UpdateData(hetFemales, "Aa Females");
+    }
+
 	private void OnSetupPressed()
 	{
 		ClearMice();
@@ -112,15 +154,25 @@ public class Main : Node
 		AdvanceOneStep();
 	}
 
+	private void OnGoPressed()
+	{
+		_isGoActive = !_isGoActive;
+	}
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		
 	}
 
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
+	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public override void _Process(float delta)
+	{
+		CountMice();
+
+        if (_isGoActive)
+		{
+			AdvanceOneStep();
+		}
+	}
 }

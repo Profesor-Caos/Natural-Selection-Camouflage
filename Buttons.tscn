@@ -37,3 +37,4 @@ text = "Predation?"
 
 [connection signal="pressed" from="Setup" to="." method="OnSetupPressed"]
 [connection signal="pressed" from="VBoxContainer/Go Once" to="." method="OnGoOncePressed"]
+[connection signal="pressed" from="VBoxContainer/Go" to="." method="OnGoPressed"]

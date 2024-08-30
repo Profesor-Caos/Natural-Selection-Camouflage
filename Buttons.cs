@@ -7,8 +7,10 @@ public class Buttons : HBoxContainer
 	public delegate void SetupPressed();
 	[Signal]
 	public delegate void GoOncePressed();
+    [Signal]
+    public delegate void GoPressed();
 
-	private void OnSetupPressed()
+    private void OnSetupPressed()
 	{
 		EmitSignal("SetupPressed");
 	}
@@ -18,8 +20,13 @@ public class Buttons : HBoxContainer
 		EmitSignal("GoOncePressed");
 	}
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+    private void OnGoPressed()
+    {
+        EmitSignal("GoPressed");
+    }
+
+    // Called when the node enters the scene tree for the first time.
+    public override void _Ready()
 	{
 		
 	}
