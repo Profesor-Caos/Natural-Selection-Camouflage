@@ -24,6 +24,11 @@ config/name="Natural Selection Camouflage"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
+[display]
+
+window/size/width=1110
+window/size/height=660
+
 [editor]
 
 version_control_autoload_on_startup=true

@@ -10,6 +10,10 @@ public class Main : Node
 	[Export]
 	public PackedScene MouseScene;
 
+	private List<int> homozygousDominantCounts = new List<int>();
+	private List<int> homozygousRecessiveCounts = new List<int>();
+	private List<int> heterozygousCounts = new List<int>();
+
 	private void ClearMice()
 	{
 		// Note that for calling Godot-provided methods with strings,
@@ -17,6 +21,14 @@ public class Main : Node
 
 		// Clear any mice that already exist.
 		GetTree().CallGroup("mice", "queue_free");
+		homozygousDominantCounts.Clear();
+		homozygousRecessiveCounts.Clear();
+		heterozygousCounts.Clear();
+	}
+
+	private void ResetDefaults()
+	{
+
 	}
 
 	private void PopulateMice()
@@ -32,7 +44,6 @@ public class Main : Node
 			mouse.Initialize(Sex.Male, Genotype.AA);
 			mouse.Position = Utils.GetRandomPointInPolygon(poly);
 			poly.AddChild(mouse);
-
 		}
 
 		for (int i = 0; i < settings.AaMales; i++)
@@ -74,6 +85,10 @@ public class Main : Node
 			mouse.Position = Utils.GetRandomPointInPolygon(poly);
 			poly.AddChild(mouse);
 		}
+
+		homozygousDominantCounts.Add(settings.AAMales + settings.AAFemales);
+		homozygousRecessiveCounts.Add(settings.aaMales + settings.aaFemales);
+		heterozygousCounts.Add(settings.AaMales + settings.AaFemales);
 	}
 
 	private void AdvanceOneStep()

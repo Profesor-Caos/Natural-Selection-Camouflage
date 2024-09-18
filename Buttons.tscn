@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Buttons.cs" type="Script" id=1]
+[ext_resource path="res://SpinBoxSlider.tscn" type="PackedScene" id=2]
 
 [node name="Buttons" type="HBoxContainer"]
 margin_right = 40.0
@@ -34,6 +35,38 @@ margin_left = 124.0
 margin_right = 219.0
 margin_bottom = 44.0
 text = "Predation?"
+
+[node name="SpinBoxSlider" parent="." instance=ExtResource( 2 )]
+margin_left = 223.0
+margin_right = 305.0
+MinValue = 5
+MaxValue = 50
+Default = 26
+Label = "% Chance of Predation"
+
+[node name="Set Light Background" type="Button" parent="."]
+margin_left = 309.0
+margin_right = 454.0
+margin_bottom = 44.0
+text = "Set Light Background"
+
+[node name="Set Dark Background" type="Button" parent="."]
+margin_left = 458.0
+margin_right = 601.0
+margin_bottom = 44.0
+text = "Set Dark Background"
+
+[node name="Set Mixed Background" type="Button" parent="."]
+margin_left = 605.0
+margin_right = 758.0
+margin_bottom = 44.0
+text = "Set Mixed Background"
+
+[node name="Add A Mutant" type="Button" parent="."]
+margin_left = 762.0
+margin_right = 861.0
+margin_bottom = 44.0
+text = "Add A Mutant"
 
 [connection signal="pressed" from="Setup" to="." method="OnSetupPressed"]
 [connection signal="pressed" from="VBoxContainer/Go Once" to="." method="OnGoOncePressed"]

@@ -87,6 +87,16 @@ public class InitialSettings : VBoxContainer
 		}
 	}
 
+	public void ResetDefaults()
+	{
+		GetNode<SpinBoxSlider>("AA Males").ResetDefault();
+        GetNode<SpinBoxSlider>("Aa Males").ResetDefault();
+        GetNode<SpinBoxSlider>("aa Males").ResetDefault();
+		GetNode<SpinBoxSlider>("AA Females").ResetDefault();
+        GetNode<SpinBoxSlider>("Aa Females").ResetDefault();
+        GetNode<SpinBoxSlider>("aa Females").ResetDefault();
+    }
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
