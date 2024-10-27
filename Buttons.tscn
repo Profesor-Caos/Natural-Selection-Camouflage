@@ -36,7 +36,7 @@ margin_right = 219.0
 margin_bottom = 44.0
 text = "Predation?"
 
-[node name="SpinBoxSlider" parent="." instance=ExtResource( 2 )]
+[node name="PredationSlider" parent="." instance=ExtResource( 2 )]
 margin_left = 223.0
 margin_right = 305.0
 MinValue = 5
@@ -71,3 +71,7 @@ text = "Add A Mutant"
 [connection signal="pressed" from="Setup" to="." method="OnSetupPressed"]
 [connection signal="pressed" from="VBoxContainer/Go Once" to="." method="OnGoOncePressed"]
 [connection signal="pressed" from="VBoxContainer/Go" to="." method="OnGoPressed"]
+[connection signal="pressed" from="Set Light Background" to="." method="OnSetLightBackgroundPressed"]
+[connection signal="pressed" from="Set Dark Background" to="." method="OnSetDarkBackgroundPressed"]
+[connection signal="pressed" from="Set Mixed Background" to="." method="OnSetMixedBackgroundPressed"]
+[connection signal="pressed" from="Add A Mutant" to="." method="OnAddAMutantPressed"]

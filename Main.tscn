@@ -17,17 +17,23 @@ MouseScene = ExtResource( 5 )
 margin_right = 40.0
 margin_bottom = 40.0
 
-[node name="Speed Slider Container" type="HBoxContainer" parent="VBoxContainer"]
+[node name="SpeedSliderContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_right = 1108.0
 margin_bottom = 44.0
 alignment = 1
 
-[node name="SpinBoxSlider" parent="VBoxContainer/Speed Slider Container" instance=ExtResource( 8 )]
-margin_left = 513.0
-margin_right = 595.0
+[node name="SpeedSlider" parent="VBoxContainer/SpeedSliderContainer" instance=ExtResource( 8 )]
+margin_left = 458.0
+margin_right = 540.0
 MaxValue = 100
 Default = 10
 Label = "Simulation Speed"
+
+[node name="ResetDefaultsButton" type="Button" parent="VBoxContainer/SpeedSliderContainer"]
+margin_left = 544.0
+margin_right = 649.0
+margin_bottom = 44.0
+text = "Reset Defaults"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 48.0
@@ -85,6 +91,11 @@ rect_min_size = Vector2( 520, 520 )
 size_flags_horizontal = 2
 size_flags_vertical = 2
 
+[connection signal="pressed" from="VBoxContainer/SpeedSliderContainer/ResetDefaultsButton" to="." method="OnResetDefaultsButtonPressed"]
+[connection signal="AddAMutantPressed" from="VBoxContainer/HBoxContainer/Buttons" to="." method="OnAddAMutantPressed"]
 [connection signal="GoOncePressed" from="VBoxContainer/HBoxContainer/Buttons" to="." method="OnGoOncePressed"]
 [connection signal="GoPressed" from="VBoxContainer/HBoxContainer/Buttons" to="." method="OnGoPressed"]
+[connection signal="SetDarkBackgroundPressed" from="VBoxContainer/HBoxContainer/Buttons" to="." method="OnSetDarkBackgroundPressed"]
+[connection signal="SetLightBackgroundPressed" from="VBoxContainer/HBoxContainer/Buttons" to="." method="OnSetLightBackgroundPressed"]
+[connection signal="SetMixedBackgroundPressed" from="VBoxContainer/HBoxContainer/Buttons" to="." method="OnSetMixedBackgroundPressed"]
 [connection signal="SetupPressed" from="VBoxContainer/HBoxContainer/Buttons" to="." method="OnSetupPressed"]

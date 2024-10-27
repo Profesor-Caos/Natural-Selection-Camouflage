@@ -9,6 +9,14 @@ public class Buttons : HBoxContainer
 	public delegate void GoOncePressed();
     [Signal]
     public delegate void GoPressed();
+    [Signal]
+    public delegate void SetLightBackgroundPressed();
+    [Signal]
+    public delegate void SetDarkBackgroundPressed();
+    [Signal]
+    public delegate void SetMixedBackgroundPressed();
+    [Signal]
+    public delegate void AddAMutantPressed();
 
     private void OnSetupPressed()
 	{
@@ -23,6 +31,32 @@ public class Buttons : HBoxContainer
     private void OnGoPressed()
     {
         EmitSignal("GoPressed");
+    }
+
+	private void OnSetLightBackgroundPressed()
+	{
+		EmitSignal("SetLightBackgroundPressed");
+	}
+
+    private void OnSetDarkBackgroundPressed()
+    {
+        EmitSignal("SetDarkBackgroundPressed");
+    }
+
+    private void OnSetMixedBackgroundPressed()
+    {
+        EmitSignal("SetMixedBackgroundPressed");
+    }
+
+    private void OnAddAMutantPressed()
+    {
+        EmitSignal("AddAMutantPressed");
+    }
+
+    public void ResetDefaults()
+	{
+        SpinBoxSlider predationSlider = GetNode<SpinBoxSlider>("PredationSlider");
+		predationSlider.ResetDefault();
     }
 
     // Called when the node enters the scene tree for the first time.

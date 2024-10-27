@@ -1,4 +1,4 @@
-using Godot;
+﻿using Godot;
 using NaturalSelectionCamouflage;
 using System;
 using System.Collections.Generic;
@@ -7,12 +7,22 @@ public class Main : Node
 {
 	private bool _isGoActive = false;
 
-	[Export]
+	// Colors
+	private static Color DEFAULT_BROWN = Color.Color8(185, 122, 86);
+	private static Color DARK_BROWN = Color.Color8(66, 46, 30);
+	private static Color LIGHT_BROWN = Color.Color8(216, 197, 182);
+
+    [Export]
 	public PackedScene MouseScene;
 
 	private List<int> homozygousDominantCounts = new List<int>();
 	private List<int> homozygousRecessiveCounts = new List<int>();
 	private List<int> heterozygousCounts = new List<int>();
+
+	private static int DELTA_QUEUE_SIZE = 100;
+	private float deltaSinceLastUpdate = 0;
+	private float runningDeltaSum = 0;
+	private Queue<float> runningDeltas = new Queue<float>(DELTA_QUEUE_SIZE);
 
 	private void ClearMice()
 	{
@@ -27,9 +37,22 @@ public class Main : Node
 	}
 
 	private void ResetDefaults()
-	{
+    {
+        InitialSettings settings = GetNode("VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/InitialSettings") as InitialSettings;
+		settings.ResetDefaults();
 
-	}
+        Buttons buttons = GetNode("VBoxContainer/HBoxContainer/Buttons") as Buttons;
+		buttons.ResetDefaults();
+
+        SpinBoxSlider speedSlider = GetNode<SpinBoxSlider>("VBoxContainer/SpeedSliderContainer/SpeedSlider/");
+		speedSlider.ResetDefault();
+
+        Node canvas = GetNode($"{nameof(VBoxContainer)}/HBoxContainer2/Canvas");
+        Polygon2D poly = canvas.GetNode<Polygon2D>($"Canvas");
+		poly.Color = DEFAULT_BROWN;
+
+		// TODO: Predation checkbox
+    }
 
 	private void PopulateMice()
 	{
@@ -89,6 +112,11 @@ public class Main : Node
 		homozygousDominantCounts.Add(settings.AAMales + settings.AAFemales);
 		homozygousRecessiveCounts.Add(settings.aaMales + settings.aaFemales);
 		heterozygousCounts.Add(settings.AaMales + settings.AaFemales);
+	}
+
+	private void Predation()
+	{
+
 	}
 
 	private void AdvanceOneStep()
@@ -157,6 +185,11 @@ public class Main : Node
         data.UpdateData(hetFemales, "Aa Females");
     }
 
+	private void OnResetDefaultsButtonPressed()
+	{
+		ResetDefaults();
+	}
+
 	private void OnSetupPressed()
 	{
 		ClearMice();
@@ -174,20 +207,67 @@ public class Main : Node
 		_isGoActive = !_isGoActive;
 	}
 
+	private void OnSetLightBackgroundPressed()
+    {
+        Node canvas = GetNode($"{nameof(VBoxContainer)}/HBoxContainer2/Canvas");
+        Polygon2D poly = canvas.GetNode<Polygon2D>($"Canvas");
+        poly.Color = LIGHT_BROWN;
+    }
+
+	private void OnSetDarkBackgroundPressed()
+    {
+        Node canvas = GetNode($"{nameof(VBoxContainer)}/HBoxContainer2/Canvas");
+        Polygon2D poly = canvas.GetNode<Polygon2D>($"Canvas");
+        poly.Color = DARK_BROWN;
+    }
+
+	private void OnSetMixedBackgroundPressed()
+	{
+
+	}
+
+	private void OnAddAMutantPressed()
+	{
+        Node canvas = GetNode($"{nameof(VBoxContainer)}/HBoxContainer2/Canvas");
+        Polygon2D poly = canvas.GetNode<Polygon2D>($"Canvas");
+
+        Sex sex = new Sex[] { Sex.Male, Sex.Female }[new Random().Next(0, 2)];
+        Mouse mouse = MouseScene.Instance() as Mouse;
+        mouse.Initialize(sex, Genotype.Aa);
+        mouse.Position = Utils.GetRandomPointInPolygon(poly);
+        poly.AddChild(mouse);
+    }
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		
-	}
+
+    }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(float delta)
 	{
 		CountMice();
 
+        if (runningDeltas.Count == DELTA_QUEUE_SIZE)
+        {
+            runningDeltaSum -= runningDeltas.Dequeue();
+        }
+        runningDeltaSum += delta;
+        runningDeltas.Enqueue(delta);
+        deltaSinceLastUpdate += delta;
+
         if (_isGoActive)
 		{
-			AdvanceOneStep();
+			SpinBoxSlider speedSlider = GetNode<SpinBoxSlider>("VBoxContainer/SpeedSliderContainer/SpeedSlider/");
+			int speed = speedSlider.Value;
+
+			// This will result in different behavior for the first DELTA_QUEUE_SIZE number of frames, but ¯\_(ツ)_/¯
+			if (deltaSinceLastUpdate >= (runningDeltaSum / DELTA_QUEUE_SIZE) * DELTA_QUEUE_SIZE / speed)
+			{
+				AdvanceOneStep();
+				deltaSinceLastUpdate = 0;
+			}
 		}
 	}
 }
