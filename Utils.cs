@@ -10,6 +10,8 @@ namespace NaturalSelectionCamouflage
 {
     internal static class Utils
     {
+        private static Random random = new Random();
+
         private static (float, float, float, float) canvasVertices = (float.MinValue, float.MinValue, float.MinValue, float.MinValue);
 
         private static (float minX, float minY, float maxX, float maxY) GetBoundingBox(Polygon2D polygon = null)
@@ -41,6 +43,34 @@ namespace NaturalSelectionCamouflage
 
             canvasVertices = (minX, minY, maxX, maxY);
             return canvasVertices;
+        }
+
+        public static void Move(Area2D sprite)
+        {
+            // Keep trying to move until we move in a valid way (such that we end up in the desired box)
+            while (true)
+            {
+                // Generate a random angle in degrees
+                float randomAngle = (float)random.NextDouble() * 360.0f;
+
+                // Convert the angle to radians
+                float angleRad = Mathf.Deg2Rad(randomAngle);
+
+                // Calculate the direction vector
+                Vector2 direction = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
+
+                // The amount moved per tick in the original NetLogo was 5
+                // This is an amount meant to be similar
+                int movementConstant = 50;
+
+                // Move the sprite
+                sprite.Position += direction * movementConstant;
+
+                if (!Utils.IsInBoundingBox(sprite.Position))
+                    sprite.Position -= direction * movementConstant; // move the opposite direction instead to stay in the box
+                else
+                    return;
+            }
         }
 
         public static bool IsInBoundingBox(Vector2 location)

@@ -8,6 +8,9 @@ radius = 16.0
 
 [node name="Mouse" type="Area2D" groups=["mice"]]
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.112, 0.112 )

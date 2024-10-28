@@ -33,34 +33,6 @@ public class Mouse : Area2D
 		}
 	}
 
-	private void Move()
-	{
-		// Keep trying to move until we move in a valid way (such that we end up in the desired box)
-		while (true)
-		{
-			// Generate a random angle in degrees
-			float randomAngle = (float)random.NextDouble() * 360.0f;
-
-			// Convert the angle to radians
-			float angleRad = Mathf.Deg2Rad(randomAngle);
-
-			// Calculate the direction vector
-			Vector2 direction = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
-
-			// The amount moved per tick in the original NetLogo was 5
-			// This is an amount meant to be similar
-			int movementConstant = 50;
-
-			// Move the sprite
-			Position += direction * movementConstant;
-
-			if (!Utils.IsInBoundingBox(Position))
-				Position -= direction * movementConstant; // move the opposite direction instead to stay in the box
-			else
-				return;
-		}
-	}
-
 	private void AgeAndDie()
 	{
 		Age += 1;
@@ -148,7 +120,7 @@ public class Mouse : Area2D
 
 			child.Initialize(child.Sex, child.Genotype);
 			child.Position = this.Position;
-			child.Move();
+			Utils.Move(child);
 			children[i] = child;
 		}
 
@@ -159,10 +131,19 @@ public class Mouse : Area2D
 		return children;
 	}
 
-	public void Behave()
+	private void DieIfPredated(int predationChance, float camouflage)
 	{
-		Move();
+		if (random.NextDouble() < predationChance / 100.0 - camouflage)
+			this.QueueFree();
+	}
+
+	public void Behave(bool predationEnabled, int predationChance, float camouflage)
+	{
+		Utils.Move(this);
 		AgeAndDie();
+
+		if (predationEnabled)
+			DieIfPredated(predationChance, camouflage);
 	}
 
 	// Called when the node enters the scene tree for the first time.

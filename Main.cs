@@ -2,6 +2,7 @@
 using NaturalSelectionCamouflage;
 using System;
 using System.Collections.Generic;
+using System.Runtime;
 
 public class Main : Node
 {
@@ -12,8 +13,21 @@ public class Main : Node
 	private static Color DARK_BROWN = Color.Color8(66, 46, 30);
 	private static Color LIGHT_BROWN = Color.Color8(216, 197, 182);
 
+	// Camouflage constants
+    private static int WHITE_CAMO = 10;
+    private static int LIGHT_BROWN_CAMO = 8;
+    private static int DEFAULT_BROWN_CAMO = 5;
+    private static int DARK_BROWN_CAMO = 2;
+	private static int BLACK_CAMO = 0;
+
+	private Color leftColor = DEFAULT_BROWN;
+	private Color rightColor = DEFAULT_BROWN;
+
     [Export]
 	public PackedScene MouseScene;
+
+	[Export]
+	public PackedScene BirdScene;
 
 	private List<int> homozygousDominantCounts = new List<int>();
 	private List<int> homozygousRecessiveCounts = new List<int>();
@@ -36,6 +50,11 @@ public class Main : Node
 		heterozygousCounts.Clear();
 	}
 
+	private void ClearBirds()
+	{
+		GetTree().CallGroup("birds", "queue_free");
+	}
+
 	private void ResetDefaults()
     {
         InitialSettings settings = GetNode("VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/InitialSettings") as InitialSettings;
@@ -47,11 +66,9 @@ public class Main : Node
         SpinBoxSlider speedSlider = GetNode<SpinBoxSlider>("VBoxContainer/SpeedSliderContainer/SpeedSlider/");
 		speedSlider.ResetDefault();
 
-        Node canvas = GetNode($"{nameof(VBoxContainer)}/HBoxContainer2/Canvas");
-        Polygon2D poly = canvas.GetNode<Polygon2D>($"Canvas");
-		poly.Color = DEFAULT_BROWN;
+        SetDefaultBackground();
 
-		// TODO: Predation checkbox
+        // TODO: Predation checkbox
     }
 
 	private void PopulateMice()
@@ -114,17 +131,90 @@ public class Main : Node
 		heterozygousCounts.Add(settings.AaMales + settings.AaFemales);
 	}
 
-	private void Predation()
-	{
+	private void SpawnBird()
+    {
+        Node canvas = GetNode($"{nameof(VBoxContainer)}/HBoxContainer2/Canvas");
+        Polygon2D poly = canvas.GetNode<Polygon2D>($"Canvas");
 
+        Bird bird = BirdScene.Instance() as Bird;
+        bird.Position = Utils.GetRandomPointInPolygon(poly);
+        poly.AddChild(bird);
+    }
+
+	private void PopulatePredators()
+    {
+        CheckBox predation = GetNode("VBoxContainer/HBoxContainer/Buttons/PredationEnabled") as CheckBox;
+		bool predationEnabled = predation.Pressed;
+		if (!predationEnabled)
+			return;
+
+        int predationValue = (GetNode("VBoxContainer/HBoxContainer/Buttons/PredationSlider") as SpinBoxSlider).Value;
+
+        for (int i = 0; i < predationValue; i++)
+		{
+			SpawnBird();
+        }
+    }
+
+	private void MaintainPredatorPopulation(bool predationEnabled)
+    {
+        var birds = GetTree().GetNodesInGroup("birds");
+
+
+        if (!predationEnabled)
+        {
+			if (birds.Count > 0)
+				ClearBirds();
+			return;
+        }
+
+        int predationValue = (GetNode("VBoxContainer/HBoxContainer/Buttons/PredationSlider") as SpinBoxSlider).Value;
+
+        if (birds.Count > predationValue)
+		{
+			// kill off a bird if there are too many.
+			(birds[birds.Count - 1] as Bird).Die();
+		}
+		else if (birds.Count < predationValue)
+        {
+			SpawnBird();
+        }
+    }
+
+	private int GetBackgroundCamo(Color color)
+	{
+		if (color == DARK_BROWN)
+			return DARK_BROWN_CAMO;
+		else if (color == LIGHT_BROWN)
+			return LIGHT_BROWN_CAMO;
+		else
+			return DEFAULT_BROWN_CAMO;
 	}
 
-	private void AdvanceOneStep()
-	{
-		var mice = GetTree().GetNodesInGroup("mice");
+    private void AdvanceOneStep()
+    {
+        Node canvas = GetNode($"{nameof(VBoxContainer)}/HBoxContainer2/Canvas");
+        Polygon2D poly = canvas.GetNode<Polygon2D>($"Canvas");
+
+        CheckBox predation = GetNode("VBoxContainer/HBoxContainer/Buttons/PredationEnabled") as CheckBox;
+        bool predationEnabled = predation.Pressed;
+
+        int predationValue = (GetNode("VBoxContainer/HBoxContainer/Buttons/PredationSlider") as SpinBoxSlider).Value;
+
+        var mice = GetTree().GetNodesInGroup("mice");
 		foreach (Mouse mouse in mice)
 		{
-			mouse.Behave();
+			var coords = mouse.Position;
+
+			float camouflage;
+			int mouseColor = mouse.Genotype == Genotype.aa ? WHITE_CAMO : BLACK_CAMO;
+			int backColor;
+			if (mouse.Position.x < poly.Polygon[1].x / 2)
+				backColor = GetBackgroundCamo(leftColor);
+			else
+				backColor = GetBackgroundCamo(rightColor);
+			camouflage = 1 / Math.Abs(mouseColor - backColor);
+			mouse.Behave(predationEnabled, predationValue, camouflage);
 		}
 
 		foreach (Mouse mouse in mice)
@@ -132,7 +222,15 @@ public class Main : Node
 			mouse.SeekAPartner();
 		}
 
-		List<Mouse> newGeneration = new List<Mouse>();
+		MaintainPredatorPopulation(predationEnabled);
+
+        var birds = GetTree().GetNodesInGroup("birds");
+        foreach (Bird bird in birds)
+        {
+            bird.Behave();
+        }
+
+        List<Mouse> newGeneration = new List<Mouse>();
 		foreach (Mouse mouse in mice)
 		{
 			Mouse[] newMice = mouse.Reproduce(MouseScene);
@@ -140,8 +238,6 @@ public class Main : Node
 				newGeneration.AddRange(newMice);
 		}
 
-		Node canvas = GetNode($"{nameof(VBoxContainer)}/HBoxContainer2/Canvas");
-		Polygon2D poly = canvas.GetNode<Polygon2D>($"Canvas");
 		newGeneration.ForEach(m => poly.AddChild(m));
 	}
 
@@ -195,6 +291,7 @@ public class Main : Node
 		ClearMice();
 
 		PopulateMice();
+		PopulatePredators();
 	}
 
 	private void OnGoOncePressed()
@@ -207,24 +304,65 @@ public class Main : Node
 		_isGoActive = !_isGoActive;
 	}
 
-	private void OnSetLightBackgroundPressed()
+	private void SetBackground()
     {
         Node canvas = GetNode($"{nameof(VBoxContainer)}/HBoxContainer2/Canvas");
         Polygon2D poly = canvas.GetNode<Polygon2D>($"Canvas");
-        poly.Color = LIGHT_BROWN;
+
+        var uv = poly.Uv;
+
+        Shader shader = new Shader();
+        shader.Code = @"
+			shader_type canvas_item;
+			uniform vec4 left_color;
+			uniform vec4 right_color;
+
+			void fragment() {
+				if (UV.x < 0.5) {
+					COLOR = left_color;
+				} else {
+					COLOR = right_color;
+				}
+			}
+		";
+
+        ShaderMaterial shaderMaterial = new ShaderMaterial();
+        shaderMaterial.Shader = shader;
+
+        shaderMaterial.SetShaderParam("left_color", leftColor);
+        shaderMaterial.SetShaderParam("right_color", rightColor);
+
+        poly.Material = shaderMaterial;
+
+    }
+
+	private void OnSetLightBackgroundPressed()
+    {
+        this.leftColor = LIGHT_BROWN;
+		this.rightColor = LIGHT_BROWN;
+        SetBackground();
     }
 
 	private void OnSetDarkBackgroundPressed()
     {
-        Node canvas = GetNode($"{nameof(VBoxContainer)}/HBoxContainer2/Canvas");
-        Polygon2D poly = canvas.GetNode<Polygon2D>($"Canvas");
-        poly.Color = DARK_BROWN;
+        this.leftColor = DARK_BROWN;
+        this.rightColor = DARK_BROWN;
+        SetBackground();
     }
 
 	private void OnSetMixedBackgroundPressed()
-	{
+    {
+        this.leftColor = LIGHT_BROWN;
+        this.rightColor = DARK_BROWN;
+        SetBackground();
+    }
 
-	}
+	private void SetDefaultBackground()
+    {
+        this.leftColor = LIGHT_BROWN;
+        this.rightColor = DARK_BROWN;
+        SetBackground();
+    }
 
 	private void OnAddAMutantPressed()
 	{
@@ -240,8 +378,8 @@ public class Main : Node
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
-	{
-
+    {
+		SetDefaultBackground();
     }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
