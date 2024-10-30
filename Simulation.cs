@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime;
 
-public class Main : Node
+public class Simulation : Node
 {
 	private bool _isGoActive = false;
 
@@ -359,8 +359,8 @@ public class Main : Node
 
 	private void SetDefaultBackground()
     {
-        this.leftColor = LIGHT_BROWN;
-        this.rightColor = DARK_BROWN;
+        this.leftColor = DEFAULT_BROWN;
+        this.rightColor = DEFAULT_BROWN;
         SetBackground();
     }
 

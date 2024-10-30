@@ -23,7 +23,7 @@ public class Mouse : Area2D
 		Sex = sex;
 		if (sex == Sex.Male)
 		{
-			this.ApplyScale(new Vector2(1.25f, 1.25f));
+			this.ApplyScale(new Vector2(1.20f, 1.20f));
 		}
 
 		Genotype = genotype;
