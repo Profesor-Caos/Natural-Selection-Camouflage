@@ -28,11 +28,11 @@ public class NavigationPage : HBoxContainer
         if (CurrentPageIndex == Pages.Count - 1)
             return;
 
-        EmitSignal(nameof(NavigationButtonPressed));
-
         CenterContainer content = GetNode<CenterContainer>("Content");
         content.RemoveChild(Pages[CurrentPageIndex++]);
         content.AddChild(Pages[CurrentPageIndex]);
+
+        EmitSignal(nameof(NavigationButtonPressed));
     }
 
     public void AddPage(Control page)
@@ -47,6 +47,14 @@ public class NavigationPage : HBoxContainer
         PackedScene page1PackedScene = (PackedScene)ResourceLoader.Load("res://Page1.tscn");
         Control page1 = (Control)page1PackedScene.Instance();
         AddPage(page1);
+
+        PackedScene page2PackedScene = (PackedScene)ResourceLoader.Load("res://Page2.tscn");
+        Control page2 = (Control)page2PackedScene.Instance();
+        AddPage(page2);
+
+        PackedScene page3PackedScene = (PackedScene)ResourceLoader.Load("res://Page3.tscn");
+        Control page3 = (Control)page3PackedScene.Instance();
+        AddPage(page3);
 
         PackedScene page4PackedScene = (PackedScene)ResourceLoader.Load("res://Page4.tscn");
         Control page4 = (Control)page4PackedScene.Instance();

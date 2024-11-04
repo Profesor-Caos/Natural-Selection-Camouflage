@@ -376,6 +376,7 @@ public class Simulation : Node
 
 	private void OnAddAMutantPressed()
 	{
+
         Node canvas = GetNode($"{nameof(VBoxContainer)}/HBoxContainer2/Canvas");
         Polygon2D poly = canvas.GetNode<Polygon2D>($"Canvas");
 

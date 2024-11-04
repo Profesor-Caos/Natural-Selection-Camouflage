@@ -1,0 +1,9 @@
+[gd_scene format=2]
+
+[node name="RichTextLabel" type="RichTextLabel"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 500, 200 )
+bbcode_enabled = true
+bbcode_text = "[center]Now, play around with the simulation. It is totally okay if you don't understand everything mentioned in the simulation. Just explore it for a few minutes, then go to the next page!"
+text = "Now, play around with the simulation. It is totally okay if you don't understand everything mentioned in the simulation. Just explore it for a few minutes, then go to the next page!"

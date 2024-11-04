@@ -1,4 +1,5 @@
 using Godot;
+using NaturalSelectionCamouflage;
 using System;
 
 public class Buttons : HBoxContainer
@@ -18,39 +19,53 @@ public class Buttons : HBoxContainer
     [Signal]
     public delegate void AddAMutantPressed();
 
+    private void TryInteraction(string signal, string buttonName)
+    {
+        string message;
+        if (InteractionStatus.CheckInteraction(buttonName, out message))
+            EmitSignal(signal);
+        else
+        {
+            AcceptDialog ad = new AcceptDialog();
+            ad.DialogText = message;
+            this.AddChild(ad);
+            ad.PopupCentered();
+        }
+    }
+
     private void OnSetupPressed()
 	{
-		EmitSignal("SetupPressed");
+		TryInteraction("SetupPressed", "Setup");
 	}
 
 	private void OnGoOncePressed()
 	{
-		EmitSignal("GoOncePressed");
+        TryInteraction("GoOncePressed", "Go Once");
 	}
 
     private void OnGoPressed()
     {
-        EmitSignal("GoPressed");
+        TryInteraction("GoPressed", "Go");
     }
 
 	private void OnSetLightBackgroundPressed()
 	{
-		EmitSignal("SetLightBackgroundPressed");
+        TryInteraction("SetLightBackgroundPressed", "Set Light Background");
 	}
 
     private void OnSetDarkBackgroundPressed()
     {
-        EmitSignal("SetDarkBackgroundPressed");
+        TryInteraction("SetDarkBackgroundPressed", "Set Dark Background");
     }
 
     private void OnSetMixedBackgroundPressed()
     {
-        EmitSignal("SetMixedBackgroundPressed");
+        TryInteraction("SetMixedBackgroundPressed", "Set Mixed Background");
     }
 
     private void OnAddAMutantPressed()
     {
-        EmitSignal("AddAMutantPressed");
+        TryInteraction("AddAMutantPressed", "Add A Mutant");
     }
 
     public void ResetDefaults()

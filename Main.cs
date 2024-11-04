@@ -1,4 +1,5 @@
 using Godot;
+using NaturalSelectionCamouflage;
 using System;
 
 public class Main : HBoxContainer
@@ -11,6 +12,7 @@ public class Main : HBoxContainer
     {
         int pageNumber = GetNode<NavigationPage>("NavigationPage").CurrentPageIndex;
         GetNode<Simulation>("Simulation").SelectedPage = pageNumber;
+        InteractionStatus.PageNumber = pageNumber;
     }
 
     // Called when the node enters the scene tree for the first time.

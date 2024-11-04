@@ -2,7 +2,7 @@
 
 [ext_resource path="res://WrapTextEdit.tscn" type="PackedScene" id=1]
 
-[node name="Page2" type="VBoxContainer"]
+[node name="Page4" type="VBoxContainer"]
 margin_right = 400.0
 margin_bottom = 400.0
 
