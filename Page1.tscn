@@ -1,0 +1,21 @@
+[gd_scene format=2]
+
+[node name="Panel" type="VBoxContainer"]
+margin_top = -1.0
+margin_right = 500.0
+margin_bottom = 599.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_right = 500.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 500, 50 )
+bbcode_enabled = true
+bbcode_text = "[center]Press the “Setup” button of the simulation. Describe what you see in this simulation.[/center]"
+text = "Press the “Setup” button of the simulation. Describe what you see in this simulation."
+
+[node name="TextEdit" type="TextEdit" parent="."]
+margin_top = 54.0
+margin_right = 500.0
+margin_bottom = 254.0
+rect_min_size = Vector2( 500, 200 )
+wrap_enabled = true

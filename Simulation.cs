@@ -38,6 +38,8 @@ public class Simulation : Node
 	private float runningDeltaSum = 0;
 	private Queue<float> runningDeltas = new Queue<float>(DELTA_QUEUE_SIZE);
 
+	public int SelectedPage { get; set; }
+
 	private void ClearMice()
 	{
 		// Note that for calling Godot-provided methods with strings,

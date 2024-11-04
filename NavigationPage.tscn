@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://NavigationPage.cs" type="Script" id=1]
+
+[node name="NavigationPage" type="HBoxContainer"]
+margin_right = 1109.0
+margin_bottom = 659.0
+script = ExtResource( 1 )
+
+[node name="BackButton" type="ToolButton" parent="."]
+margin_right = 42.0
+margin_bottom = 659.0
+text = "Back"
+
+[node name="Content" type="CenterContainer" parent="."]
+margin_left = 46.0
+margin_right = 1063.0
+margin_bottom = 659.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="NextButton" type="ToolButton" parent="."]
+margin_left = 1067.0
+margin_right = 1109.0
+margin_bottom = 659.0
+text = "Next"
+
+[connection signal="pressed" from="BackButton" to="." method="OnBackButtonPressed"]
+[connection signal="pressed" from="NextButton" to="." method="OnForwardButtonPressed"]

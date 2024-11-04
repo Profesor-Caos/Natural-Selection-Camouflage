@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Simulation.tscn" type="PackedScene" id=1]
+[ext_resource path="res://NavigationPage.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Main.cs" type="Script" id=3]
+
+[node name="Main" type="HBoxContainer"]
+margin_right = 1363.0
+margin_bottom = 697.0
+script = ExtResource( 3 )
+
+[node name="NavigationPage" parent="." instance=ExtResource( 2 )]
+margin_right = 92.0
+margin_bottom = 697.0
+
+[node name="VSeparator" type="VSeparator" parent="."]
+margin_left = 96.0
+margin_right = 100.0
+margin_bottom = 697.0
+
+[node name="Simulation" parent="." instance=ExtResource( 1 )]
+margin_left = 104.0
+margin_right = 104.0
+margin_bottom = 697.0
