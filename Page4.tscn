@@ -1,13 +1,15 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://WrapTextEdit.tscn" type="PackedScene" id=1]
 
 [node name="Page2" type="VBoxContainer"]
 margin_right = 400.0
 margin_bottom = 400.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-margin_right = 400.0
-margin_bottom = 300.0
-rect_min_size = Vector2( 400, 300 )
+margin_right = 500.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 500, 200 )
 bbcode_enabled = true
 bbcode_text = "[center]Change the sliders under the \"Initial Settings\" in the simulation. Try to change the settings such that all the mice have light-colored fur. Once you get all mice with light fur, describe the initial settings you used.
 
@@ -18,8 +20,8 @@ text = "Change the sliders under the \"Initial Settings\" in the simulation. Try
 Make sure every time you change the sliders that you press SETUP afterward so that you can actually see the effects of your new settings.
 "
 
-[node name="TextEdit" type="TextEdit" parent="."]
-margin_top = 304.0
-margin_right = 400.0
-margin_bottom = 504.0
-rect_min_size = Vector2( 200, 200 )
+[node name="WrapTextEdit" parent="." instance=ExtResource( 1 )]
+margin_top = 204.0
+margin_right = 500.0
+margin_bottom = 404.0
+rect_min_size = Vector2( 500, 200 )

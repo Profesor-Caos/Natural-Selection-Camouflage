@@ -22,3 +22,5 @@ margin_bottom = 697.0
 margin_left = 104.0
 margin_right = 104.0
 margin_bottom = 697.0
+
+[connection signal="NavigationButtonPressed" from="NavigationPage" to="." method="OnNavigationPageNavigationButtonPressed"]

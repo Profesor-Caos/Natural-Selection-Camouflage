@@ -7,7 +7,11 @@ public class Main : HBoxContainer
     // private int a = 2;
     // private string b = "text";
 
-
+    private void OnNavigationPageNavigationButtonPressed()
+    {
+        int pageNumber = GetNode<NavigationPage>("NavigationPage").CurrentPageIndex;
+        GetNode<Simulation>("Simulation").SelectedPage = pageNumber;
+    }
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
