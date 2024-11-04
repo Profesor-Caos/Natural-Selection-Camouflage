@@ -10,6 +10,25 @@ public class Data : VBoxContainer
         dataBox.Value = value;
     }
 
+    public void SetTotalMice(int value)
+    {
+        DataBox totalMice = GetNode<DataBox>("TotalMice");
+        totalMice.Value = value;
+    }
+
+
+    public void IncrementGeneration()
+    {
+        DataBox generation = GetNode<DataBox>("Generations");
+        generation.Value++;
+    }
+
+    public void ResetGeneration()
+    {
+        DataBox generation = GetNode<DataBox>("Generations");
+        generation.Value = 0;
+    }
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {

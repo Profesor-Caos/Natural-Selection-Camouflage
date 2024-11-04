@@ -62,3 +62,15 @@ margin_top = 120.0
 margin_right = 72.0
 margin_bottom = 176.0
 Label = "aa Females"
+
+[node name="Generations" parent="." instance=ExtResource( 1 )]
+margin_top = 198.0
+margin_right = 148.0
+margin_bottom = 254.0
+Label = "Generations"
+
+[node name="TotalMice" parent="." instance=ExtResource( 1 )]
+margin_top = 258.0
+margin_right = 148.0
+margin_bottom = 314.0
+Label = "Total Mice"

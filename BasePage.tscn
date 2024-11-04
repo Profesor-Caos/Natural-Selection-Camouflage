@@ -1,0 +1,5 @@
+[gd_scene format=2]
+
+[node name="Panel" type="Panel"]
+margin_right = 1108.0
+margin_bottom = 656.0

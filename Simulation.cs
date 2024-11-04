@@ -48,7 +48,10 @@ public class Simulation : Node
 		homozygousDominantCounts.Clear();
 		homozygousRecessiveCounts.Clear();
 		heterozygousCounts.Clear();
-	}
+
+        Data data = GetNode<Data>("VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/Data");
+        data.ResetGeneration();
+    }
 
 	private void ClearBirds()
 	{
@@ -239,7 +242,9 @@ public class Simulation : Node
 		}
 
 		newGeneration.ForEach(m => poly.AddChild(m));
-	}
+
+        CountMice();
+    }
 
 	private void CountMice()
 	{
@@ -279,6 +284,8 @@ public class Simulation : Node
         data.UpdateData(homoDMales, "AA Females");
         data.UpdateData(homoRFemales, "aa Females");
         data.UpdateData(hetFemales, "Aa Females");
+		data.SetTotalMice(mice.Count);
+		data.IncrementGeneration();
     }
 
 	private void OnResetDefaultsButtonPressed()
@@ -287,11 +294,12 @@ public class Simulation : Node
 	}
 
 	private void OnSetupPressed()
-	{
-		ClearMice();
+    {
+        ClearMice();
 
-		PopulateMice();
+        PopulateMice();
 		PopulatePredators();
+		CountMice();
 	}
 
 	private void OnGoOncePressed()
@@ -385,7 +393,6 @@ public class Simulation : Node
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(float delta)
 	{
-		CountMice();
 
         if (runningDeltas.Count == DELTA_QUEUE_SIZE)
         {
@@ -396,8 +403,8 @@ public class Simulation : Node
         deltaSinceLastUpdate += delta;
 
         if (_isGoActive)
-		{
-			SpinBoxSlider speedSlider = GetNode<SpinBoxSlider>("VBoxContainer/SpeedSliderContainer/SpeedSlider/");
+        {
+            SpinBoxSlider speedSlider = GetNode<SpinBoxSlider>("VBoxContainer/SpeedSliderContainer/SpeedSlider/");
 			int speed = speedSlider.Value;
 
 			// This will result in different behavior for the first DELTA_QUEUE_SIZE number of frames, but ¯\_(ツ)_/¯
