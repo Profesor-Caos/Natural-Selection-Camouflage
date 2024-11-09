@@ -1,0 +1,14 @@
+[gd_scene format=2]
+
+[node name="VBoxContainer" type="VBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 500, 200 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_right = 500.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 0, 50 )
+bbcode_enabled = true
+bbcode_text = "[center]To get all mice with light fur, you may change the initial settings as the following: "
+text = "To get all mice with light fur, you may change the initial settings as the following: "

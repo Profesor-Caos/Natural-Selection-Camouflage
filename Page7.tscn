@@ -1,0 +1,22 @@
+[gd_scene format=2]
+
+[node name="VBoxContainer" type="VBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 500, 200 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_right = 500.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 500, 200 )
+bbcode_enabled = true
+bbcode_text = "[center]Next, you will make some predictions and test your predictions by exploring the simulation. 
+
+While answering the following questions, make sure that the \"PREDATION?\" box is unchecked.
+
+Make sure you press SETUP after unchecking the \"predation?\" box. "
+text = "Next, you will make some predictions and test your predictions by exploring the simulation. 
+
+While answering the following questions, make sure that the \"PREDATION?\" box is unchecked.
+
+Make sure you press SETUP after unchecking the \"predation?\" box. "

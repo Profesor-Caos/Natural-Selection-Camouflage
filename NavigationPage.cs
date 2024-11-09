@@ -44,25 +44,15 @@ public class NavigationPage : HBoxContainer
     public override void _Ready()
     {
         CenterContainer content = GetNode<CenterContainer>("Content");
-        PackedScene page1PackedScene = (PackedScene)ResourceLoader.Load("res://Page1.tscn");
-        Control page1 = (Control)page1PackedScene.Instance();
-        AddPage(page1);
 
-        PackedScene page2PackedScene = (PackedScene)ResourceLoader.Load("res://Page2.tscn");
-        Control page2 = (Control)page2PackedScene.Instance();
-        AddPage(page2);
-
-        PackedScene page3PackedScene = (PackedScene)ResourceLoader.Load("res://Page3.tscn");
-        Control page3 = (Control)page3PackedScene.Instance();
-        AddPage(page3);
-
-        PackedScene page4PackedScene = (PackedScene)ResourceLoader.Load("res://Page4.tscn");
-        Control page4 = (Control)page4PackedScene.Instance();
-        AddPage(page4);
-
-        // loop through ints and load pages for each int in range.
-        // add pages to list.
-        content.AddChild(page1);
+        int pageCount = 8;
+        for (int i = 1; i <= pageCount; i++)
+        {
+            PackedScene pagePackedScene = (PackedScene)ResourceLoader.Load($"res://Page{i}.tscn");
+            Control page = (Control)pagePackedScene.Instance();
+            AddPage(page);
+        }
+        content.AddChild(Pages[0]);
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.

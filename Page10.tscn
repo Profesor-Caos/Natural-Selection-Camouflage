@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://WrapTextEdit.tscn" type="PackedScene" id=1]
+
+[node name="Page4" type="VBoxContainer"]
+margin_right = 400.0
+margin_bottom = 400.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_right = 500.0
+margin_bottom = 160.0
+rect_min_size = Vector2( 500, 160 )
+bbcode_enabled = true
+bbcode_text = "[center]There are two alleles \"A\" (dominant) and \"a\" (recessive). Based on your investigations so far, can you say what would the phenotype (fur color: light or dark) be of the three genotypes \"AA\", \"Aa\", and \"aa\"?
+
+AA: Light or Dark
+Aa: Light or Dark
+aa: Light or Dark
+
+Please explain how you figured out the answer to the previous question."
+text = "There are two alleles \"A\" (dominant) and \"a\" (recessive). Based on your investigations so far, can you say what would the phenotype (fur color: light or dark) be of the three genotypes \"AA\", \"Aa\", and \"aa\"?
+
+AA: Light or Dark
+Aa: Light or Dark
+aa: Light or Dark
+
+Please explain how you figured out the answer to the previous question."
+
+[node name="WrapTextEdit" parent="." instance=ExtResource( 1 )]
+margin_top = 164.0
+margin_right = 500.0
+margin_bottom = 314.0
+rect_min_size = Vector2( 500, 150 )

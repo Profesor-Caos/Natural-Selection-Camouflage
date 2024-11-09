@@ -1,0 +1,58 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://resources/page8.png" type="Texture" id=1]
+[ext_resource path="res://WrapTextEdit.tscn" type="PackedScene" id=2]
+
+[node name="VBoxContainer" type="VBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 500, 200 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_right = 500.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 0, 20 )
+bbcode_enabled = true
+bbcode_text = "[center]Make the simulation look like the figure below:"
+text = "Make the simulation look like the figure below:"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_top = 24.0
+margin_right = 500.0
+margin_bottom = 224.0
+rect_min_size = Vector2( 200, 200 )
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 6
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+margin_top = 228.0
+margin_right = 500.0
+margin_bottom = 278.0
+rect_min_size = Vector2( 0, 50 )
+bbcode_enabled = true
+bbcode_text = "[center]
+Predict what will happen after lots of generations if the initial population of mice all has light-colored fur?"
+text = "
+Predict what will happen after lots of generations if the initial population of mice all has light-colored fur?"
+
+[node name="WrapTextEdit" parent="." instance=ExtResource( 2 )]
+margin_top = 282.0
+margin_right = 500.0
+margin_bottom = 382.0
+rect_min_size = Vector2( 0, 100 )
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="."]
+margin_top = 386.0
+margin_right = 500.0
+margin_bottom = 426.0
+rect_min_size = Vector2( 0, 40 )
+bbcode_enabled = true
+bbcode_text = "[center]Run an experiment to prove or disprove your answer to the previous question and explain your observations.[/center]"
+text = "Run an experiment to prove or disprove your answer to the previous question and explain your observations."
+
+[node name="WrapTextEdit2" parent="." instance=ExtResource( 2 )]
+margin_top = 430.0
+margin_right = 500.0
+margin_bottom = 530.0
+rect_min_size = Vector2( 0, 100 )

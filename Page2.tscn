@@ -9,17 +9,17 @@ bbcode_text = "[center][b]The Rock Pocket Mice Simulation Environment:[/b]
 
 In this simulation, there are mice with two types of fur coat colors: light and dark.
 
-[b]●[/b] What you can see like fur color are referred to as phenotypes, which are determined by the genes that a mouse has.
-[b]●[/b]  There are two kinds of genes in this simulation that change the fur coat color of mice.
-In this simulation, \"AA\", \"Aa\", and \"aa\" are genotypes (genetic makeup) of mice. The fur coat color of a mouse is dependent on its genotype. 
+[b]●[/b] What you can see like fur color are referred to as [i]phenotypes[/i], which are determined by the genes that a mouse has. There are two kinds of genes in this simulation that change the fur coat color of mice.
+
+[b]●[/b]  In this simulation, \"AA\", \"Aa\", and \"aa\" are genotypes (genetic makeup) of mice. The fur coat color of a mouse is dependent on its genotype. 
 
 Each clock tick in the simulation is a mouse generation. In each generation, male and female mice move around randomly, search for a partner, and reproduce if they find a partner. [/center]"
 text = "The Rock Pocket Mice Simulation Environment:
 
 In this simulation, there are mice with two types of fur coat colors: light and dark.
 
-● What you can see like fur color are referred to as phenotypes, which are determined by the genes that a mouse has.
-●  There are two kinds of genes in this simulation that change the fur coat color of mice.
-In this simulation, \"AA\", \"Aa\", and \"aa\" are genotypes (genetic makeup) of mice. The fur coat color of a mouse is dependent on its genotype. 
+● What you can see like fur color are referred to as phenotypes, which are determined by the genes that a mouse has. There are two kinds of genes in this simulation that change the fur coat color of mice.
+
+●  In this simulation, \"AA\", \"Aa\", and \"aa\" are genotypes (genetic makeup) of mice. The fur coat color of a mouse is dependent on its genotype. 
 
 Each clock tick in the simulation is a mouse generation. In each generation, male and female mice move around randomly, search for a partner, and reproduce if they find a partner. "
