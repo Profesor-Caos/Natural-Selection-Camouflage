@@ -40,6 +40,16 @@ public class Simulation : Node
 
 	public int SelectedPage { get; set; }
 
+	public void SubscribeLogger(EventHandler<LogEventArgs> handler)
+	{
+        InitialSettings settings = GetNode("VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/InitialSettings") as InitialSettings;
+		settings.SubscribeLogger(handler);
+
+        Buttons buttons = GetNode("VBoxContainer/HBoxContainer/Buttons") as Buttons;
+		buttons.LogEvent += handler;
+		
+    }
+
 	private void ClearMice()
 	{
 		// Note that for calling Godot-provided methods with strings,

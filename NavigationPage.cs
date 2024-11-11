@@ -45,7 +45,7 @@ public class NavigationPage : HBoxContainer
     {
         CenterContainer content = GetNode<CenterContainer>("Content");
 
-        int pageCount = 8;
+        int pageCount = 10;
         for (int i = 1; i <= pageCount; i++)
         {
             PackedScene pagePackedScene = (PackedScene)ResourceLoader.Load($"res://Page{i}.tscn");

@@ -97,8 +97,18 @@ public class InitialSettings : VBoxContainer
         GetNode<SpinBoxSlider>("aa Females").ResetDefault();
     }
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+	public void SubscribeLogger(EventHandler<LogEventArgs> handler)
+	{
+        GetNode<SpinBoxSlider>("AA Males").LogEvent += handler;
+        GetNode<SpinBoxSlider>("Aa Males").LogEvent += handler;
+        GetNode<SpinBoxSlider>("aa Males").LogEvent += handler;
+        GetNode<SpinBoxSlider>("AA Females").LogEvent += handler;
+        GetNode<SpinBoxSlider>("Aa Females").LogEvent += handler;
+        GetNode<SpinBoxSlider>("aa Females").LogEvent += handler;
+    }
+
+    // Called when the node enters the scene tree for the first time.
+    public override void _Ready()
 	{
 		
 	}

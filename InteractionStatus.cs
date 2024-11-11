@@ -8,6 +8,8 @@ namespace NaturalSelectionCamouflage
 {
     internal class InteractionStatus
     {
+        public static bool IsControlGroup = false;
+
         public static int PageNumber = 0;
 
         public static string Prompt3 = "Change the sliders under initial settings. Press SETUP afterwards to see the effects!";
@@ -15,6 +17,12 @@ namespace NaturalSelectionCamouflage
         public static bool CheckInteraction(string controlName, out string message)
         {
             message = null;
+
+            if (IsControlGroup)
+                return true;
+
+            //if (PageNumber == 0)
+            //    return false;
 
             if (PageNumber != 3)
                 return true;

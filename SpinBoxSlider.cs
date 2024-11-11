@@ -1,8 +1,15 @@
 using Godot;
+using NaturalSelectionCamouflage;
 using System;
 
 public partial class SpinBoxSlider : VBoxContainer
 {
+	public event EventHandler<LogEventArgs> LogEvent;
+
+	private bool _dragged = false;
+
+	private bool _checkingInteraction = false;
+
 	private SpinBox _spinBox;
 	public SpinBox SpinBox
 	{
@@ -102,19 +109,72 @@ public partial class SpinBoxSlider : VBoxContainer
 
 	private void OnSpinBoxValueChanged(float value)
 	{
-		_value = (int)value;
+		string message;
+        if (!InteractionStatus.CheckInteraction(Label, out message) && !_checkingInteraction)
+        {
+			_checkingInteraction = true;
+			SpinBox.Value = _value;
+            AcceptDialog ad = new AcceptDialog();
+            ad.DialogText = message;
+            this.AddChild(ad);
+            ad.PopupCentered();
+			_checkingInteraction = false;
+			return;
+        }
+
 		HSlider slider = GetNode<HSlider>($"{nameof(HSlider)}");
 		slider.Value = value;
+
+		if (_dragged)
+			return;
+
+        _value = (int)value;
+
+        LogEvent?.Invoke(this, new LogEventArgs(DateTime.Now, $"{Label} value changed to {value}."));
 	}
-	
-	private void OnHSliderValueChanged(float value)
+
+	private void OnHSliderDragEnded(bool value_changed)
 	{
-		_value = (int)value;
+		_dragged = false;
+
+        string message;
+        if (!InteractionStatus.CheckInteraction(Label, out message) && !_checkingInteraction)
+        {
+            _checkingInteraction = true;
+            Slider.Value = _value;
+            AcceptDialog ad = new AcceptDialog();
+            ad.DialogText = message;
+            this.AddChild(ad);
+            ad.PopupCentered();
+            _checkingInteraction = false;
+            return;
+        }
+
+        if (!value_changed)
+			return;
+
+		double value = Slider.Value;
+        SpinBox spinBox = GetNode<SpinBox>($"{nameof(HBoxContainer)}/{nameof(SpinBox)}");
+        spinBox.Value = value;
+    }
+
+    private void OnHSliderDragStarted()
+    {
+		_dragged = true;
+    }
+
+    private void OnHSliderValueChanged(float value)
+    {
+
+        if (_dragged)
+            return;
+
+        _value = (int)value;
 		SpinBox spinBox = GetNode<SpinBox>($"{nameof(HBoxContainer)}/{nameof(SpinBox)}");
 		spinBox.Value = value;
 	}
 
-	public void ResetDefault()
+    public void ResetDefault()
 	{
 		this.Value = this.Default;
 	}

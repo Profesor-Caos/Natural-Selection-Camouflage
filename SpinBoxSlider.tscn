@@ -39,5 +39,7 @@ size_flags_horizontal = 8
 max_value = 200.0
 value = 50.0
 
+[connection signal="drag_ended" from="HSlider" to="." method="OnHSliderDragEnded"]
+[connection signal="drag_started" from="HSlider" to="." method="OnHSliderDragStarted"]
 [connection signal="value_changed" from="HSlider" to="." method="OnHSliderValueChanged"]
 [connection signal="value_changed" from="HBoxContainer/SpinBox" to="." method="OnSpinBoxValueChanged"]

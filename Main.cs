@@ -1,12 +1,10 @@
 using Godot;
 using NaturalSelectionCamouflage;
-using System;
+using System.Collections.Generic;
 
 public class Main : HBoxContainer
 {
-    // Declare member variables here. Examples:
-    // private int a = 2;
-    // private string b = "text";
+    public Queue<string> Logs = new Queue<string>();
 
     private void OnNavigationPageNavigationButtonPressed()
     {

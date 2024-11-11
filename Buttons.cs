@@ -4,7 +4,9 @@ using System;
 
 public class Buttons : HBoxContainer
 {
-	[Signal]
+    public event EventHandler<LogEventArgs> LogEvent;
+    
+    [Signal]
 	public delegate void SetupPressed();
 	[Signal]
 	public delegate void GoOncePressed();
@@ -19,8 +21,16 @@ public class Buttons : HBoxContainer
     [Signal]
     public delegate void AddAMutantPressed();
 
+    public void SubscribeLogger(EventHandler<LogEventArgs> handler)
+    {
+        SpinBoxSlider predationSlider = GetNode<SpinBoxSlider>("PredationSlider");
+        predationSlider.LogEvent += handler;
+    }
+
     private void TryInteraction(string signal, string buttonName)
     {
+        LogEvent?.Invoke(this, new LogEventArgs(DateTime.Now, $"{buttonName} pressed."));
+
         string message;
         if (InteractionStatus.CheckInteraction(buttonName, out message))
             EmitSignal(signal);

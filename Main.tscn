@@ -23,4 +23,6 @@ margin_left = 104.0
 margin_right = 104.0
 margin_bottom = 697.0
 
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
 [connection signal="NavigationButtonPressed" from="NavigationPage" to="." method="OnNavigationPageNavigationButtonPressed"]
