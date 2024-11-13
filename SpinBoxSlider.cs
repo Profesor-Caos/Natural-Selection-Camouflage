@@ -8,7 +8,11 @@ public partial class SpinBoxSlider : VBoxContainer
 
 	private bool _dragged = false;
 
-	private bool _checkingInteraction = false;
+	private bool _sliderChanged = false;
+
+	private bool _updating = false;
+
+	private bool _frameDelay = false;
 
 	private SpinBox _spinBox;
 	public SpinBox SpinBox
@@ -108,54 +112,34 @@ public partial class SpinBoxSlider : VBoxContainer
 	}
 
 	private void OnSpinBoxValueChanged(float value)
-	{
+    {
+        if (_updating)
+            return;
+
 		string message;
-        if (!InteractionStatus.CheckInteraction(Label, out message) && !_checkingInteraction)
-        {
-			_checkingInteraction = true;
+		if (!InteractionStatus.CheckInteraction(Label, out message))
+		{
+			_updating = true;
 			SpinBox.Value = _value;
-            AcceptDialog ad = new AcceptDialog();
-            ad.DialogText = message;
-            this.AddChild(ad);
-            ad.PopupCentered();
-			_checkingInteraction = false;
+			_updating = false;
+			AcceptDialog ad = new AcceptDialog();
+			ad.DialogText = message;
+			this.AddChild(ad);
+			ad.PopupCentered();
 			return;
-        }
+		}
 
-		HSlider slider = GetNode<HSlider>($"{nameof(HSlider)}");
-		slider.Value = value;
+		_updating = true;
+		_value = (int)value;
+		Slider.Value = _value;
+		_updating = false;
 
-		if (_dragged)
-			return;
-
-        _value = (int)value;
-
-        LogEvent?.Invoke(this, new LogEventArgs(DateTime.Now, $"{Label} value changed to {value}."));
+		LogEvent?.Invoke(this, new LogEventArgs(DateTime.Now, $"{Label} value changed to {value}."));
 	}
 
 	private void OnHSliderDragEnded(bool value_changed)
 	{
 		_dragged = false;
-
-        string message;
-        if (!InteractionStatus.CheckInteraction(Label, out message) && !_checkingInteraction)
-        {
-            _checkingInteraction = true;
-            Slider.Value = _value;
-            AcceptDialog ad = new AcceptDialog();
-            ad.DialogText = message;
-            this.AddChild(ad);
-            ad.PopupCentered();
-            _checkingInteraction = false;
-            return;
-        }
-
-        if (!value_changed)
-			return;
-
-		double value = Slider.Value;
-        SpinBox spinBox = GetNode<SpinBox>($"{nameof(HBoxContainer)}/{nameof(SpinBox)}");
-        spinBox.Value = value;
     }
 
     private void OnHSliderDragStarted()
@@ -165,13 +149,15 @@ public partial class SpinBoxSlider : VBoxContainer
 
     private void OnHSliderValueChanged(float value)
     {
+		if (_updating)
+			return;
 
-        if (_dragged)
-            return;
+        _sliderChanged = true;
 
-        _value = (int)value;
-		SpinBox spinBox = GetNode<SpinBox>($"{nameof(HBoxContainer)}/{nameof(SpinBox)}");
-		spinBox.Value = value;
+        _updating = true;
+		SpinBox.Value = value;
+		_updating = false;
+
 	}
 
     public void ResetDefault()
@@ -186,9 +172,41 @@ public partial class SpinBoxSlider : VBoxContainer
 		spinBox.SetAnchorsPreset(LayoutPreset.TopRight);
 	}
 
-//	// Called every frame. 'delta' is the elapsed time since the previous frame.
-//	public override void _Process(double delta)
-//	{
-//
-//	}
+	//	// Called every frame. 'delta' is the elapsed time since the previous frame.
+	public override void _Process(float delta)
+	{
+		if (_sliderChanged)
+		{
+			if (_dragged)
+				return;
+
+			if (!_frameDelay)
+			{
+				_frameDelay = true;
+				// Delay processing this so it's not processed as being dragged when it was only clicked.
+				return;
+			}
+
+			_frameDelay = false;
+
+            string message;
+			if (!InteractionStatus.CheckInteraction(Label, out message))
+			{
+				_updating = true;
+				Slider.Value = _value;
+				SpinBox.Value = _value;
+				_updating = false;
+				AcceptDialog ad = new AcceptDialog();
+				ad.DialogText = message;
+				this.AddChild(ad);
+				ad.PopupCentered();
+				_sliderChanged = false;
+				return;
+			}
+
+			_value = (int)Slider.Value;
+			_sliderChanged = false;
+			return;
+		}
+	}
 }
