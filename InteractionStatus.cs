@@ -21,9 +21,6 @@ namespace NaturalSelectionCamouflage
             if (IsControlGroup)
                 return true;
 
-            if (PageNumber == 0)
-                return false;
-
             if (PageNumber != 3)
                 return true;
 
