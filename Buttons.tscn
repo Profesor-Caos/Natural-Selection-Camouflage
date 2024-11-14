@@ -71,6 +71,7 @@ text = "Add A Mutant"
 [connection signal="pressed" from="Setup" to="." method="OnSetupPressed"]
 [connection signal="pressed" from="VBoxContainer/Go Once" to="." method="OnGoOncePressed"]
 [connection signal="pressed" from="VBoxContainer/Go" to="." method="OnGoPressed"]
+[connection signal="toggled" from="PredationEnabled" to="." method="OnPredationEnabledToggled"]
 [connection signal="pressed" from="Set Light Background" to="." method="OnSetLightBackgroundPressed"]
 [connection signal="pressed" from="Set Dark Background" to="." method="OnSetDarkBackgroundPressed"]
 [connection signal="pressed" from="Set Mixed Background" to="." method="OnSetMixedBackgroundPressed"]

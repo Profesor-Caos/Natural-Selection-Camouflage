@@ -33,7 +33,10 @@ public class Buttons : HBoxContainer
 
         string message;
         if (InteractionStatus.CheckInteraction(buttonName, out message))
-            EmitSignal(signal);
+        { 
+            if (signal != null)
+                EmitSignal(signal);
+        }
         else
         {
             AcceptDialog ad = new AcceptDialog();
@@ -76,6 +79,29 @@ public class Buttons : HBoxContainer
     private void OnAddAMutantPressed()
     {
         TryInteraction("AddAMutantPressed", "Add A Mutant");
+    }
+
+    private bool _toggling = false;
+    private void OnPredationEnabledToggled(bool buttonPressed)
+    {
+        if (_toggling)
+            return;
+
+        LogEvent?.Invoke(this, new LogEventArgs(DateTime.Now, $"PredationEnabled pressed."));
+
+        string message;
+        if (InteractionStatus.CheckInteraction("Predation", out message))
+            return;
+
+        CheckBox predation = GetNode<CheckBox>("PredationEnabled");
+        _toggling = true;
+        predation.Pressed = !buttonPressed;
+        _toggling = false;
+
+        AcceptDialog ad = new AcceptDialog();
+        ad.DialogText = message;
+        this.AddChild(ad);
+        ad.PopupCentered();
     }
 
     public void ResetDefaults()

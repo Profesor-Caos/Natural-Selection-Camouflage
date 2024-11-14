@@ -39,6 +39,10 @@ namespace NaturalSelectionCamouflage
                     return false;
                 if (controlName == "Add A Mutant")
                     return false;
+                if (controlName == "Predation")
+                    return false;
+                if (controlName == "% Chance of Predation")
+                    return false;
             }
 
             return true;
