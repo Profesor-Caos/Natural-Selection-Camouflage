@@ -7,9 +7,10 @@ using System.Runtime;
 public class Simulation : Node
 {
 	private bool _isGoActive = false;
+    public event EventHandler<LogEventArgs> LogEvent;
 
-	// Colors
-	private static Color DEFAULT_BROWN = Color.Color8(185, 122, 86);
+    // Colors
+    private static Color DEFAULT_BROWN = Color.Color8(185, 122, 86);
 	private static Color DARK_BROWN = Color.Color8(66, 46, 30);
 	private static Color LIGHT_BROWN = Color.Color8(216, 197, 182);
 
@@ -46,11 +47,16 @@ public class Simulation : Node
 		settings.SubscribeLogger(handler);
 
         Buttons buttons = GetNode("VBoxContainer/HBoxContainer/Buttons") as Buttons;
+		buttons.SubscribeLogger(handler);
 		buttons.LogEvent += handler;
-		
+
+        SpinBoxSlider speedSlider = GetNode<SpinBoxSlider>("VBoxContainer/SpeedSliderContainer/SpeedSlider/");
+        speedSlider.LogEvent += handler;
+
+        this.LogEvent += handler;
     }
 
-	private void ClearMice()
+    private void ClearMice()
 	{
 		// Note that for calling Godot-provided methods with strings,
 		// we have to use the original Godot snake_case name.
@@ -303,6 +309,7 @@ public class Simulation : Node
 	private void OnResetDefaultsButtonPressed()
 	{
 		ResetDefaults();
+		this.LogEvent?.Invoke(this, new LogEventArgs(DateTime.Now, "Reset Defaults Button pressed."));
 	}
 
 	private void OnSetupPressed()

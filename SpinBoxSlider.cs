@@ -118,8 +118,9 @@ public partial class SpinBoxSlider : VBoxContainer
 
 		string message;
 		if (!InteractionStatus.CheckInteraction(Label, out message))
-		{
-			_updating = true;
+        {
+            LogEvent?.Invoke(this, new LogEventArgs(DateTime.Now, $"{Label} value was attempted to be changed to {SpinBox.Value}."));
+            _updating = true;
 			SpinBox.Value = _value;
 			_updating = false;
 			AcceptDialog ad = new AcceptDialog();
@@ -157,12 +158,13 @@ public partial class SpinBoxSlider : VBoxContainer
         _updating = true;
 		SpinBox.Value = value;
 		_updating = false;
-
 	}
 
     public void ResetDefault()
 	{
+		//_updating = true;
 		this.Value = this.Default;
+		//_updating = false;
 	}
 
 	// Called when the node enters the scene tree for the first time.
@@ -192,7 +194,8 @@ public partial class SpinBoxSlider : VBoxContainer
             string message;
 			if (!InteractionStatus.CheckInteraction(Label, out message))
 			{
-				_updating = true;
+                LogEvent?.Invoke(this, new LogEventArgs(DateTime.Now, $"{Label} value was attempted to be changed to {Slider.Value}."));
+                _updating = true;
 				Slider.Value = _value;
 				SpinBox.Value = _value;
 				_updating = false;
@@ -206,7 +209,10 @@ public partial class SpinBoxSlider : VBoxContainer
 
 			_value = (int)Slider.Value;
 			_sliderChanged = false;
-			return;
+
+            LogEvent?.Invoke(this, new LogEventArgs(DateTime.Now, $"{Label} value changed to {_value}."));
+
+            return;
 		}
 	}
 }

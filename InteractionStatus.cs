@@ -13,6 +13,11 @@ namespace NaturalSelectionCamouflage
         public static int PageNumber = 0;
 
         public static string Prompt3 = "Change the sliders under initial settings. Press SETUP afterwards to see the effects!";
+        public static string Prompt7 = "Make sure you press setup after unchecking the \"Predation?\" box.";
+        public static string Prompt8A = "Remember to adjust the initial settings sliders so that all the mice are white.";
+        public static string Prompt8B = "Remember that the Homozygous recessive mice were white.";
+        public static string Prompt9A = "Remember to adjust the initial settings sliders so that all the mice are black.";
+        public static string Prompt9B = "Remember that the Homozygous recessive mice were white.";
 
         public static bool CheckInteraction(string controlName, out string message)
         {
@@ -43,6 +48,19 @@ namespace NaturalSelectionCamouflage
                     return false;
                 if (controlName == "% Chance of Predation")
                     return false;
+            }
+
+            if (PageNumber == 8 || PageNumber == 9)
+            {
+                if (controlName == "Go")
+                {
+
+                }
+            }
+
+            if (PageNumber == 8)
+            {
+
             }
 
             return true;
