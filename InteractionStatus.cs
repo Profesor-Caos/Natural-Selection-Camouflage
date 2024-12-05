@@ -8,7 +8,8 @@ namespace NaturalSelectionCamouflage
 {
     internal class InteractionStatus
     {
-        public static bool IsControlGroup = false;
+        public static int TestGroup = 0;
+        public static Language Language;
 
         public static int PageNumber = 0;
 

@@ -1,8 +1,8 @@
-using Godot;
+﻿using Godot;
 using System;
 using System.Collections.Generic;
 
-public class NavigationPage : HBoxContainer
+public class NavigationPage : HBoxContainer, ILocalizable
 {
     [Signal]
     public delegate void NavigationButtonPressed();
@@ -38,6 +38,29 @@ public class NavigationPage : HBoxContainer
     public void AddPage(Control page)
     {
         Pages.Add(page);
+    }
+
+    public void Localize(Language language)
+    {
+        foreach (var item in Pages)
+        {
+            if (item is ILocalizable localizable)
+                localizable.Localize(language);
+        }
+
+        Button back = GetNode<Button>("BackButton");
+        Button next = GetNode<Button>("NextButton");
+
+        if (language == Language.English)
+        {
+            back.Text = "Back";
+            next.Text = "Next";
+        }
+        else if (language == Language.Spanish)
+        {
+            back.Text = "Atrás";
+            next.Text = "Siguiente";
+        }
     }
 
     // Called when the node enters the scene tree for the first time.

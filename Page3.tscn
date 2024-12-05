@@ -1,9 +1,11 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Page3.cs" type="Script" id=1]
 
 [node name="RichTextLabel" type="RichTextLabel"]
 margin_right = 40.0
 margin_bottom = 40.0
-rect_min_size = Vector2( 500, 200 )
+rect_min_size = Vector2( 500, 300 )
 bbcode_enabled = true
 bbcode_text = "[center]
 [b]Exploration[/b]
@@ -13,3 +15,4 @@ text = "
 Exploration
 
 Now, play around with the simulation. It is totally okay if you don't understand everything mentioned in the simulation. Just explore it for a few minutes, then go to the next page!"
+script = ExtResource( 1 )

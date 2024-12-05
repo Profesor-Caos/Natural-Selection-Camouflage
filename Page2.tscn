@@ -1,9 +1,11 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Page2.cs" type="Script" id=1]
 
 [node name="RichTextLabel" type="RichTextLabel"]
 margin_right = 40.0
 margin_bottom = 40.0
-rect_min_size = Vector2( 500, 300 )
+rect_min_size = Vector2( 500, 400 )
 bbcode_enabled = true
 bbcode_text = "[center][b]The Rock Pocket Mice Simulation Environment:[/b]
 
@@ -23,3 +25,4 @@ In this simulation, there are mice with two types of fur coat colors: light and 
 ●  In this simulation, \"AA\", \"Aa\", and \"aa\" are genotypes (genetic makeup) of mice. The fur coat color of a mouse is dependent on its genotype. 
 
 Each clock tick in the simulation is a mouse generation. In each generation, male and female mice move around randomly, search for a partner, and reproduce if they find a partner. "
+script = ExtResource( 1 )

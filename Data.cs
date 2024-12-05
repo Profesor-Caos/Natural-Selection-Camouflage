@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class Data : VBoxContainer
+public class Data : VBoxContainer, ILocalizable
 {
     public void UpdateData(int value, string dataLabel)
     {
@@ -27,6 +27,41 @@ public class Data : VBoxContainer
     {
         DataBox generation = GetNode<DataBox>("Generations");
         generation.Value = 0;
+    }
+
+    public void Localize(Language language)
+    {
+        DataBox AAMales = GetNode<DataBox>("HBoxContainer/MaleDataContainer/AA Males");
+        DataBox AaMales = GetNode<DataBox>("HBoxContainer/MaleDataContainer/Aa Males");
+        DataBox aaMales = GetNode<DataBox>("HBoxContainer/MaleDataContainer/aa Males");
+        DataBox AAFemales = GetNode<DataBox>("HBoxContainer/FemaleDataContainer/AA Females");
+        DataBox AaFemales = GetNode<DataBox>("HBoxContainer/FemaleDataContainer/Aa Females");
+        DataBox aaFemales = GetNode<DataBox>("HBoxContainer/FemaleDataContainer/aa Females");
+        DataBox generation = GetNode<DataBox>("Generations");
+        DataBox totalMice = GetNode<DataBox>("TotalMice");
+
+        if (language == Language.English)
+        {
+            AAMales.Label = "AA Males";
+            AaMales.Label = "Aa Males";
+            aaMales.Label = "aa Males";
+            AAFemales.Label = "AA Females";
+            AaFemales.Label = "Aa Females";
+            aaFemales.Label = "aa Females";
+            generation.Label = "Generations";
+            totalMice.Label = "Total Mice";
+        }
+        else if (language == Language.Spanish)
+        {
+            AAMales.Label = "Machos AA";
+            AaMales.Label = "Machos Aa";
+            aaMales.Label = "Machos aa";
+            AAFemales.Label = "Hembras AA";
+            AaFemales.Label = "Hembras Aa";
+            aaFemales.Label = "Hembras aa";
+            generation.Label = "Generaciones";
+            totalMice.Label = "Total de Ratones";
+        }
     }
 
     // Called when the node enters the scene tree for the first time.

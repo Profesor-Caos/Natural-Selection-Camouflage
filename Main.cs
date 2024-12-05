@@ -3,15 +3,21 @@ using NaturalSelectionCamouflage;
 using System;
 using System.Collections.Generic;
 
-public class Main : HBoxContainer
+public class Main : HBoxContainer, ILocalizable
 {
+    private PackedScene _openingScene;
+    private OpeningScreen _openingSceneInstance;
+
+    public Language Language { get; set; }
+    public int TestGroup { get; set; }
+
     public Queue<string> Logs = new Queue<string>();
     private static float PROJECT_WIDTH = 1620.0f;
     private static float PROJECT_HEIGHT = 600.0f;
 
     private int studentID = 1;
 
-    private string URL = "http://127.0.0.1:5000";
+    private string URL = "https://nscbackend.onrender.com";
     private string EndPoint = "/api/data";
     private string[] Headers = { "Content-Type: application/json" };
 
@@ -93,9 +99,64 @@ public class Main : HBoxContainer
         return http;
     }
 
+    private void ShowOpeningScene()
+    {
+        foreach (Node child in GetChildren())
+        {
+            if (child is Control control)
+            {
+                control.Visible = false;
+            }
+        }
+
+        _openingSceneInstance = _openingScene.Instance() as OpeningScreen;
+        _openingSceneInstance.Finished += _openingSceneInstance_Finished;
+        GetParent().CallDeferred("add_child", _openingSceneInstance);
+    }
+
+    private void _openingSceneInstance_Finished(object sender, EventArgs e)
+    {
+        HideOpeningScene();
+    }
+
+    private void HideOpeningScene()
+    {
+        if (_openingSceneInstance != null)
+        {
+            _openingSceneInstance.QueueFree();
+            this.Language = _openingSceneInstance.Language;
+            this.TestGroup = _openingSceneInstance.TestGroup;
+            InteractionStatus.Language = this.Language;
+            InteractionStatus.TestGroup = this.TestGroup;
+            Localize(this.Language);
+        }
+
+        foreach (Node child in GetChildren())
+        {
+            if (child is Control control)
+            {
+                control.Visible = true;
+            }
+        }
+    }
+
+    public void Localize(Language language)
+    {
+        foreach (Node child in GetChildren())
+        {
+            if (child is ILocalizable localizable)
+            {
+                localizable.Localize(language);
+            }
+        }
+    }
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
+        _openingScene = (PackedScene)ResourceLoader.Load("res://OpeningScreen.tscn");
+        ShowOpeningScene();
+
         ResizeUI();
 
         GetNode<Simulation>("Simulation").SubscribeLogger(HandleLogEvent);

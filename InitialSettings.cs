@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class InitialSettings : VBoxContainer
+public class InitialSettings : VBoxContainer, ILocalizable
 {
 	public int AAMales
 	{
@@ -105,6 +105,38 @@ public class InitialSettings : VBoxContainer
         GetNode<SpinBoxSlider>("AA Females").LogEvent += handler;
         GetNode<SpinBoxSlider>("Aa Females").LogEvent += handler;
         GetNode<SpinBoxSlider>("aa Females").LogEvent += handler;
+    }
+
+	public void Localize(Language language)
+	{
+		Label label = GetNode<Label>("Label");
+		SpinBoxSlider AAMales = GetNode<SpinBoxSlider>("AA Males");
+        SpinBoxSlider AaMales = GetNode<SpinBoxSlider>("Aa Males");
+        SpinBoxSlider aaMales = GetNode<SpinBoxSlider>("aa Males");
+        SpinBoxSlider AAFemales = GetNode<SpinBoxSlider>("AA Females");
+        SpinBoxSlider AaFemales = GetNode<SpinBoxSlider>("Aa Females");
+        SpinBoxSlider aaFemales = GetNode<SpinBoxSlider>("aa Females");
+
+		if (language == Language.English)
+		{
+			label.Text = "Initial Settings";
+			AAMales.Label = "Homozygous Dominant Males";
+			AaMales.Label = "Heterozygous Males";
+			aaMales.Label = "Homozygous Recessive Males";
+			AAFemales.Label = "Homozygous Dominant  Females";
+			AaFemales.Label = "Heterozygous Females";
+			aaFemales.Label = "Homozygous Recessive Females";
+        }
+        else if (language == Language.Spanish)
+        {
+            label.Text = "Configuraciones Iniciales";
+            AAMales.Label = "Machos Homocigotos Dominantes";
+            AaMales.Label = "Machos Heterocigotos";
+            aaMales.Label = "Machos Homocigotos Recesivos";
+            AAFemales.Label = "Hembras Homocigotas Dominantes";
+            AaFemales.Label = "Hembras Heterocigotas";
+            aaFemales.Label = "Hembras Homocigotas Recesivas";
+        }
     }
 
     // Called when the node enters the scene tree for the first time.

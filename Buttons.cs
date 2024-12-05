@@ -1,8 +1,8 @@
-using Godot;
+﻿using Godot;
 using NaturalSelectionCamouflage;
 using System;
 
-public class Buttons : HBoxContainer
+public class Buttons : HBoxContainer, ILocalizable
 {
     public event EventHandler<LogEventArgs> LogEvent;
     
@@ -108,6 +108,44 @@ public class Buttons : HBoxContainer
 	{
         SpinBoxSlider predationSlider = GetNode<SpinBoxSlider>("PredationSlider");
 		predationSlider.ResetDefault();
+    }
+
+    public void Localize(Language language)
+    {
+        Button setup = GetNode<Button>("Setup");
+        Button goOnce = GetNode<Button>("VBoxContainer/Go Once");
+        Button go = GetNode<Button>("VBoxContainer/Go");
+        CheckBox predationEnabled = GetNode<CheckBox>("PredationEnabled");
+        SpinBoxSlider predationSlider = GetNode<SpinBoxSlider>("PredationSlider");
+        Button setLightBackground = GetNode<Button>("Set Light Background");
+        Button setDarkBackground = GetNode<Button>("Set Dark Background");
+        Button setMixedBackground = GetNode<Button>("Set Mixed Background");
+        Button addAMutant = GetNode<Button>("Add A Mutant");
+
+        if (language == Language.English)
+        {
+            setup.Text = "Setup";
+            goOnce.Text = "Go Once";
+            go.Text = "Go";
+            predationEnabled.Text = "Predation?";
+            predationSlider.Label = "% Chance of Predation";
+            setLightBackground.Text = "Set Light Background";
+            setDarkBackground.Text = "Set Dark Background";
+            setMixedBackground.Text = "Set Mixed Background";
+            addAMutant.Text = "Add A Mutant";
+        }
+        else if (language == Language.Spanish)
+        {
+            setup.Text = "Configurar";
+            goOnce.Text = "Ir Una Vez";
+            go.Text = "Ir";
+            predationEnabled.Text = "Depredación?";
+            predationSlider.Label = "% de Probabilidad de Depredación";
+            setLightBackground.Text = "Establecer Fondo Claro";
+            setDarkBackground.Text = "Establecer Fondo Oscuro";
+            setMixedBackground.Text = "Establecer Fondo Mixto";
+            addAMutant.Text = "Agregar un Mutante";
+        }
     }
 
     // Called when the node enters the scene tree for the first time.

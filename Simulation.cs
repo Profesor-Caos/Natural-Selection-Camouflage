@@ -3,8 +3,9 @@ using NaturalSelectionCamouflage;
 using System;
 using System.Collections.Generic;
 using System.Runtime;
+using static System.Net.Mime.MediaTypeNames;
 
-public class Simulation : Node
+public class Simulation : Control, ILocalizable
 {
 	private bool _isGoActive = false;
     public event EventHandler<LogEventArgs> LogEvent;
@@ -402,6 +403,30 @@ public class Simulation : Node
         mouse.Initialize(sex, Genotype.Aa);
         mouse.Position = Utils.GetRandomPointInPolygon(poly);
         poly.AddChild(mouse);
+    }
+
+	public void Localize(Language language)
+    {
+        InitialSettings settings = GetNode("VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/InitialSettings") as InitialSettings;
+		settings.Localize(language);
+        Data data = GetNode<Data>("VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/Data");
+		data.Localize(language);
+        Buttons buttons = GetNode("VBoxContainer/HBoxContainer/Buttons") as Buttons;
+		buttons.Localize(language);
+
+        Button resetDefaults = GetNode<Button>("VBoxContainer/SpeedSliderContainer/ResetDefaultsButton");
+		SpinBoxSlider speedSlider = GetNode<SpinBoxSlider>("VBoxContainer/SpeedSliderContainer/SpeedSlider");
+
+        if (language == Language.English)
+        {
+            resetDefaults.Text = "Reset Defaults";
+			speedSlider.Label = "Simulation Speed";
+        }
+        else if (language == Language.Spanish)
+        {
+            resetDefaults.Text = "Restablecer Valores Predeterminados";
+            speedSlider.Label = "Velocidad de Simulación";
+        }
     }
 
 	// Called when the node enters the scene tree for the first time.
