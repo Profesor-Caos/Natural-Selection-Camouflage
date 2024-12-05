@@ -10,6 +10,60 @@ public class Data : VBoxContainer, ILocalizable
         dataBox.Value = value;
     }
 
+    public DataBox AAMales
+    {
+        get
+        {
+            DataBox AAMales = GetNode<DataBox>("HBoxContainer/MaleDataContainer/AA Males");
+            return AAMales;
+        }
+    }
+
+    public DataBox AaMales
+    {
+        get
+        {
+            DataBox AaMales = GetNode<DataBox>("HBoxContainer/MaleDataContainer/Aa Males");
+            return AaMales;
+        }
+    }
+
+    public DataBox aaMales
+    {
+        get
+        {
+            DataBox aaMales = GetNode<DataBox>("HBoxContainer/MaleDataContainer/aa Males");
+            return aaMales;
+        }
+    }
+
+    public DataBox AAFemales
+    {
+        get
+        {
+            DataBox AAFemales = GetNode<DataBox>("HBoxContainer/FemaleDataContainer/AA Females");
+            return AAFemales;
+        }
+    }
+
+    public DataBox AaFemales
+    {
+        get
+        {
+            DataBox AaFemales = GetNode<DataBox>("HBoxContainer/FemaleDataContainer/Aa Females");
+            return AaFemales;
+        }
+    }
+
+    public DataBox aaFemales
+    {
+        get
+        {
+            DataBox aaFemales = GetNode<DataBox>("HBoxContainer/FemaleDataContainer/aa Females");
+            return aaFemales;
+        }
+    }
+
     public void SetTotalMice(int value)
     {
         DataBox totalMice = GetNode<DataBox>("TotalMice");

@@ -81,6 +81,14 @@ public class OpeningScreen : VBoxContainer, ILocalizable
     private void OnSubmitPressed()
     {
         LineEdit editor = GetNode<LineEdit>("StudentID");
+        // Special codes for testing that skip the server check.
+        if (editor.Text == "444444" || editor.Text == "555555" || editor.Text == "666666")
+        {
+            this.TestGroup = Convert.ToInt32(editor.Text[0]) - 3;
+            this.Language = GetNode<CheckBox>("LanguageChoices/Spanish").Pressed ? Language.Spanish : Language.English;
+            this.Finished?.Invoke(this, new EventArgs());
+            return;
+        }
         string url = URL + $"/students/{editor.Text}";
         var http = CreateRequest();
         Error err = http.Request(url, Headers, false, HTTPClient.Method.Get);

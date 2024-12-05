@@ -8,6 +8,8 @@ public class Main : HBoxContainer, ILocalizable
     private PackedScene _openingScene;
     private OpeningScreen _openingSceneInstance;
 
+    public Simulation Simulation { get { return this.GetNode<Simulation>("Simulation"); } }
+
     public Language Language { get; set; }
     public int TestGroup { get; set; }
 
@@ -128,6 +130,7 @@ public class Main : HBoxContainer, ILocalizable
             this.TestGroup = _openingSceneInstance.TestGroup;
             InteractionStatus.Language = this.Language;
             InteractionStatus.TestGroup = this.TestGroup;
+            InteractionStatus.Main = this;
             Localize(this.Language);
         }
 

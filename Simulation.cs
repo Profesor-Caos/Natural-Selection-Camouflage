@@ -308,9 +308,11 @@ public class Simulation : Control, ILocalizable
     }
 
 	private void OnResetDefaultsButtonPressed()
-	{
-		ResetDefaults();
-		this.LogEvent?.Invoke(this, new LogEventArgs(DateTime.Now, "Reset Defaults Button pressed."));
+    {
+        this.LogEvent?.Invoke(this, new LogEventArgs(DateTime.Now, "Reset Defaults Button pressed."));
+        ResetDefaults();
+		OnGoPressed();
+		OnSetupPressed();
 	}
 
 	private void OnSetupPressed()
