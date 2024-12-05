@@ -68,6 +68,15 @@ public class OpeningScreen : VBoxContainer, ILocalizable
             this.Finished?.Invoke(this , new EventArgs());
             return;
         }
+        else
+        {
+            AcceptDialog ad = new AcceptDialog();
+            ad.WindowTitle = "Response: " + responseCode;
+            ad.DialogText = responseText;
+            this.AddChild(ad);
+            ad.PopupCentered();
+            return;
+        }
     }
 
     private HTTPRequest CreateRequest()
