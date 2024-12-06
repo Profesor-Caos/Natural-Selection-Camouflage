@@ -15,14 +15,13 @@ public class Main : HBoxContainer, ILocalizable
     public Language Language { get; set; }
     public int TestGroup { get; set; }
 
+    public int StudentID { get; set; }
+
     public Queue<string> Logs = new Queue<string>();
     private static float PROJECT_WIDTH = 1662.0f;
     private static float PROJECT_HEIGHT = 620.0f;
 
-    private int studentID = 1;
-
     private string URL = "https://nscbackend.onrender.com";
-    private string EndPoint = "/api/data";
     private string[] Headers = { "Content-Type: application/json" };
 
     private void OnNavigationPageNavigationButtonPressed()
@@ -30,17 +29,6 @@ public class Main : HBoxContainer, ILocalizable
         int pageNumber = GetNode<NavigationPage>("NavigationPage").CurrentPageIndex;
         GetNode<Simulation>("Simulation").SelectedPage = pageNumber;
         InteractionStatus.PageNumber = pageNumber;
-        Random r = new Random();
-        int studentID = r.Next(int.MaxValue);
-        int ID = r.Next(int.MaxValue); 
-        Dictionary<string, object> data = new Dictionary<string, object>()
-        {
-            {"id", ID },
-            {"student_id", studentID}
-        };
-
-        var http = CreateRequest();
-        http.Request(URL + EndPoint, Headers, false, HTTPClient.Method.Post, JSON.Print(data));
     }
 
     private void OnRequestCompleted(int result, int responseCode, string[] headers, byte[] body, object request)
@@ -78,7 +66,7 @@ public class Main : HBoxContainer, ILocalizable
 
         var logEntry = new Godot.Collections.Dictionary<string, object>
         {
-            { "StudentID", studentID },
+            { "StudentID", StudentID },
             { "Timestamp", timestamp },
             { "PageNumber", GetNode<NavigationPage>("NavigationPage").CurrentPageIndex + 1 },
             { "LogData", logData }
@@ -129,6 +117,7 @@ public class Main : HBoxContainer, ILocalizable
             _openingSceneInstance.QueueFree();
             this.Language = _openingSceneInstance.Language;
             this.TestGroup = _openingSceneInstance.TestGroup;
+            this.StudentID = _openingSceneInstance.StudentID;
             InteractionStatus.Language = this.Language;
             InteractionStatus.TestGroup = this.TestGroup;
             InteractionStatus.Main = this;
@@ -179,6 +168,7 @@ public class Main : HBoxContainer, ILocalizable
 
         ResizeUI();
 
+        GetNode<NavigationPage>("NavigationPage").SubscribeLogger(HandleLogEvent);
         GetNode<Simulation>("Simulation").SubscribeLogger(HandleLogEvent);
     }
 

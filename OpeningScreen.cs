@@ -10,6 +10,7 @@ public class OpeningScreen : VBoxContainer, ILocalizable
 {
     public event EventHandler Finished;
     public Language Language;
+    public int StudentID;
     private bool _isSubmitting = false;
 
     public int TestGroup;
@@ -63,6 +64,9 @@ public class OpeningScreen : VBoxContainer, ILocalizable
             {
                 var testGroup = dictionary["TestGroup"];
                 this.TestGroup = Convert.ToInt32(testGroup);
+
+                var studentID = dictionary["StudentID"];
+                this.StudentID = Convert.ToInt32(studentID);
             }
             this.Language = GetNode<CheckBox>("LanguageChoices/Spanish").Pressed ? Language.Spanish : Language.English;
             this.Finished?.Invoke(this , new EventArgs());
@@ -75,6 +79,7 @@ public class OpeningScreen : VBoxContainer, ILocalizable
             ad.DialogText = responseText;
             this.AddChild(ad);
             ad.PopupCentered();
+            _isSubmitting = false;
             return;
         }
     }

@@ -4,11 +4,19 @@ using System.Collections.Generic;
 
 public class NavigationPage : HBoxContainer, ILocalizable
 {
+    public event EventHandler<LogEventArgs> LogEvent;
+
     [Signal]
     public delegate void NavigationButtonPressed();
 
     private List<Control> Pages = new List<Control>();
+    private List<string> Text = new List<string>();
     public int CurrentPageIndex = 0;
+
+    public void SubscribeLogger(EventHandler<LogEventArgs> handler)
+    {
+        this.LogEvent += handler;
+    }
 
     private void OnBackButtonPressed()
     {
@@ -19,7 +27,7 @@ public class NavigationPage : HBoxContainer, ILocalizable
         content.RemoveChild(Pages[CurrentPageIndex--]);
         content.AddChild(Pages[CurrentPageIndex]);
 
-
+        this.LogEvent?.Invoke(this, new LogEventArgs(DateTime.Now, "Back Button Pressed"));
         EmitSignal(nameof(NavigationButtonPressed));
     }
 
@@ -32,12 +40,14 @@ public class NavigationPage : HBoxContainer, ILocalizable
         content.RemoveChild(Pages[CurrentPageIndex++]);
         content.AddChild(Pages[CurrentPageIndex]);
 
+        this.LogEvent?.Invoke(this, new LogEventArgs(DateTime.Now, "Next Button Pressed"));
         EmitSignal(nameof(NavigationButtonPressed));
     }
 
     public void AddPage(Control page)
     {
         Pages.Add(page);
+        Text.Add(string.Empty);
     }
 
     public void Localize(Language language)
