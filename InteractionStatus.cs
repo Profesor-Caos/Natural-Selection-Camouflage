@@ -62,6 +62,7 @@ namespace NaturalSelectionCamouflage
             if (PageNumber == 3)
             {
                 message = Language == Language.English ? Prompt3 : EsPrompt3;
+                // TODO: Maybe a better message when Go/Go Once is pressed?
                 if (controlName == "Go Once")
                     return false;
                 if (controlName == "Go")
@@ -114,6 +115,8 @@ namespace NaturalSelectionCamouflage
 
             if (PageNumber == 8)
             {
+                // TODO: If we started with 0 white and pressed Go Once, there might now be white
+                // Need to address this and really probably just check the sliders...
                 // If mice are not all black when they press go prompt
                 if (controlName == "Go" || controlName == "Go Once")
                 {
