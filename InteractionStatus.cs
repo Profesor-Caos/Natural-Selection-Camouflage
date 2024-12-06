@@ -83,7 +83,7 @@ namespace NaturalSelectionCamouflage
                     return false;
             }
 
-            if (PageNumber == 6)
+            if (PageNumber == 6 || PageNumber == 7 || PageNumber == 8)
             {
                 if (PredationEnabled)
                 {
