@@ -8,9 +8,24 @@ public enum Result
     No
 }
 
+public class AssistanceRequestEventArgs : EventArgs
+{
+    public AssistanceRequestEventArgs(Result result, string assistanceMessage)
+    {
+        Result = result;
+        AssistanceMessage = assistanceMessage;
+    }
+
+    public Result Result { get; set; }
+
+    public string AssistanceMessage { get; set; }
+}
+
 public class AssistanceRequest : WindowDialog, ILocalizable
 {
     public Result Result = Result.No;
+
+    public string Assistance = string.Empty;
 
     private void OnYesPressed()
     {

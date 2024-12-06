@@ -48,6 +48,8 @@ namespace NaturalSelectionCamouflage
 
         public static void Initialize()
         {
+            Main.PopupClosed += Main_PopupClosed;
+
             int[] pages = new int[]{ 3, 6, 7, 8 };
             foreach (int i in pages)
             {
@@ -148,8 +150,6 @@ namespace NaturalSelectionCamouflage
 
             bool returnValue = CheckInteractionHelper(controlName, out message);
 
-            string messageCopyForLambdaFunction = message;
-
             if (returnValue)
                 return true;
 
@@ -172,23 +172,8 @@ namespace NaturalSelectionCamouflage
                     {
                         AssistanceRequest ar = ((PackedScene)ResourceLoader.Load("res://AssistanceRequest.tscn")).Instance() as AssistanceRequest;
                         Main.AddChild(ar);
-                        ar.PopupCentered();
-                        Main.AwaitPopupClosed(ar).ContinueWith(task =>
-                        {
-                            if (task.Result)
-                            {
-                                TestGroup3Overrides[PageNumber] = true;
-                                AcceptDialog ad = new AcceptDialog();
-                                ad.DialogText = messageCopyForLambdaFunction;
-                                ad.WindowTitle = Language == Language.English ? "Reminder" : "Recordatorio";
-                                Main.AddChild(ad);
-                                ad.PopupCentered();
-                            }
-                            else
-                            {
-                                PageMistakeCount[PageNumber]++;
-                            }
-                        });
+                        ar.Assistance = message;
+                        Main.ShowPopup(ar);
                         return false;
                     }
                     else
@@ -202,6 +187,22 @@ namespace NaturalSelectionCamouflage
             }
             return true;
         }
-        
+
+        private static void Main_PopupClosed(object sender, AssistanceRequestEventArgs e)
+        {
+            if (e.Result == Result.Yes)
+            {
+                TestGroup3Overrides[PageNumber] = true;
+                AcceptDialog ad = new AcceptDialog();
+                ad.DialogText = e.AssistanceMessage;
+                ad.WindowTitle = Language == Language.English ? "Reminder" : "Recordatorio";
+                Main.AddChild(ad);
+                ad.PopupCentered();
+            }
+            else
+            {
+                PageMistakeCount[PageNumber]++;
+            }
+        }
     }
 }

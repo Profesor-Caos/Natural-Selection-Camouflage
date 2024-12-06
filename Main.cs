@@ -2,12 +2,13 @@ using Godot;
 using NaturalSelectionCamouflage;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 public class Main : HBoxContainer, ILocalizable
 {
     private PackedScene _openingScene;
     private OpeningScreen _openingSceneInstance;
+
+    public event EventHandler<AssistanceRequestEventArgs> PopupClosed;
 
     public Simulation Simulation { get { return this.GetNode<Simulation>("Simulation"); } }
 
@@ -156,22 +157,19 @@ public class Main : HBoxContainer, ILocalizable
         }
     }
 
-    private TaskCompletionSource<bool> tcs;
     private AssistanceRequest popup;
+
+    public void ShowPopup(AssistanceRequest popup)
+    {
+        this.popup = popup;
+        popup.Connect("popup_hide", this, nameof(OnPopupHide));
+        popup.PopupCentered();
+    }
 
     public void OnPopupHide()
     {
         popup.Disconnect("popup_hide", this, nameof(OnPopupHide));
-        tcs.TrySetResult(popup.Result == Result.Yes);
-    }
-
-    public async Task<bool> AwaitPopupClosed(AssistanceRequest popup)
-    {
-        tcs = new TaskCompletionSource<bool>();
-        this.popup = popup;
-
-        popup.Connect("popup_hide", this, nameof(OnPopupHide));
-        return await tcs.Task;
+        this.PopupClosed?.Invoke(this, new AssistanceRequestEventArgs(popup.Result, popup.Assistance));
     }
 
     // Called when the node enters the scene tree for the first time.
