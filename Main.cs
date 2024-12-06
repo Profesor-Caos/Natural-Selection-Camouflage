@@ -2,6 +2,7 @@ using Godot;
 using NaturalSelectionCamouflage;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 public class Main : HBoxContainer, ILocalizable
 {
@@ -131,6 +132,7 @@ public class Main : HBoxContainer, ILocalizable
             InteractionStatus.Language = this.Language;
             InteractionStatus.TestGroup = this.TestGroup;
             InteractionStatus.Main = this;
+            InteractionStatus.Initialize();
             Localize(this.Language);
         }
 
@@ -152,6 +154,24 @@ public class Main : HBoxContainer, ILocalizable
                 localizable.Localize(language);
             }
         }
+    }
+
+    private TaskCompletionSource<bool> tcs;
+    private AssistanceRequest popup;
+
+    public void OnPopupHide()
+    {
+        popup.Disconnect("popup_hide", this, nameof(OnPopupHide));
+        tcs.TrySetResult(popup.Result == Result.Yes);
+    }
+
+    public async Task<bool> AwaitPopupClosed(AssistanceRequest popup)
+    {
+        tcs = new TaskCompletionSource<bool>();
+        this.popup = popup;
+
+        popup.Connect("popup_hide", this, nameof(OnPopupHide));
+        return await tcs.Task;
     }
 
     // Called when the node enters the scene tree for the first time.

@@ -93,7 +93,7 @@ public class OpeningScreen : VBoxContainer, ILocalizable
         // Special codes for testing that skip the server check.
         if (editor.Text == "444444" || editor.Text == "555555" || editor.Text == "666666")
         {
-            this.TestGroup = Convert.ToInt32(editor.Text[0]) - 3;
+            this.TestGroup = Int32.Parse(editor.Text[0].ToString()) - 3;
             this.Language = GetNode<CheckBox>("LanguageChoices/Spanish").Pressed ? Language.Spanish : Language.English;
             this.Finished?.Invoke(this, new EventArgs());
             return;

@@ -64,7 +64,13 @@ public class Simulation : Control, ILocalizable
 
 		// Clear any mice that already exist.
 		GetTree().CallGroup("mice", "queue_free");
-		homozygousDominantCounts.Clear();
+
+        var mice = GetTree().GetNodesInGroup("mice");
+        foreach (Mouse mouse in mice)
+		{
+			mouse.IsCleared = true;
+		}
+        homozygousDominantCounts.Clear();
 		homozygousRecessiveCounts.Clear();
 		heterozygousCounts.Clear();
 
@@ -273,9 +279,15 @@ public class Simulation : Control, ILocalizable
 		int homoDFemales = 0;
 		int homoRFemales = 0;
 		int hetFemales = 0;
+		int total = 0;
         var mice = GetTree().GetNodesInGroup("mice");
         foreach (Mouse mouse in mice)
         {
+			if (mouse.IsCleared)
+				continue;
+
+			total++;
+
             if (mouse.Sex == Sex.Female)
 			{
 				if (mouse.Genotype == Genotype.AA)
@@ -303,7 +315,7 @@ public class Simulation : Control, ILocalizable
         data.UpdateData(homoDMales, "AA Females");
         data.UpdateData(homoRFemales, "aa Females");
         data.UpdateData(hetFemales, "Aa Females");
-		data.SetTotalMice(mice.Count);
+		data.SetTotalMice(total);
 		data.IncrementGeneration();
     }
 
@@ -311,7 +323,7 @@ public class Simulation : Control, ILocalizable
     {
         this.LogEvent?.Invoke(this, new LogEventArgs(DateTime.Now, "Reset Defaults Button pressed."));
         ResetDefaults();
-		OnGoPressed();
+		_isGoActive = false;
 		OnSetupPressed();
 	}
 

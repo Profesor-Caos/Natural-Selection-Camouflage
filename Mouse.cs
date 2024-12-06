@@ -7,6 +7,8 @@ public class Mouse : Area2D
 {
 	private Random random = new Random();
 
+	public bool IsCleared = false;
+
 	public int Age { get; set; }
 
 	public Sex Sex { get; set; } 

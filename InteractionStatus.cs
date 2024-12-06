@@ -32,23 +32,33 @@ namespace NaturalSelectionCamouflage
             get { return Main.GetNode<Data>("Simulation/VBoxContainer/HBoxContainer2/VBoxContainer/HBoxContainer/Data"); }
         }
 
+        public static Dictionary<int, int> PageMistakeCount = new Dictionary<int, int>();
+        public static Dictionary<int, bool> TestGroup3Overrides = new Dictionary<int, bool>();
+
         public static int PageNumber = 0;
 
         public static string Prompt3 = "Change the sliders under initial settings. Press SETUP afterwards to see the effects!";
         public static string EsPrompt3 = "Cambia los deslizadores bajo configuración inicial. ¡Presiona CONFIGURAR después para ver los efectos!";
-        public static string Prompt7 = "Make sure you press setup after unchecking the \"Predation?\" box.";
-        public static string Prompt8A = "Remember to adjust the initial settings sliders so that all the mice are white.";
-        public static string Prompt8B = "Remember that the Homozygous recessive mice were white.";
-        public static string Prompt9A = "Remember to adjust the initial settings sliders so that all the mice are black.";
-        public static string Prompt9B = "Remember that the Homozygous recessive mice were white.";
+        public static string Prompt6 = "Make sure you press setup after unchecking the \"Predation?\" box.";
+        public static string EsPrompt6 = "Asegúrate de desmarcar la depredación y presionar configurar.";
+        public static string Prompt7 = "Remember to adjust the initial settings sliders so that all the mice are white then press setup.";
+        public static string EsPrompt7 = "Recuerda ajustar los deslizadores de configuración inicial para que todos los ratones sean blancos y luego presiona configurar.";
+        public static string Prompt8 = "Remember to adjust the initial settings sliders so that all the mice are black then press setup.";
+        public static string EsPrompt8 = "Recuerda ajustar los deslizadores de configuración inicial para que todos los ratones sean negros y luego presiona configurar.";
 
-        public static bool CheckInteraction(string controlName, out string message)
+        public static void Initialize()
+        {
+            int[] pages = new int[]{ 3, 6, 7, 8 };
+            foreach (int i in pages)
+            {
+                PageMistakeCount[i] = 0;
+                TestGroup3Overrides[i] = false;
+            }
+        }
+
+        public static bool CheckInteractionHelper(string controlName, out string message)
         {
             message = null;
-
-            if (TestGroup == 1)
-                return true;
-
             if (PageNumber == 3)
             {
                 message = Language == Language.English ? Prompt3 : EsPrompt3;
@@ -70,25 +80,125 @@ namespace NaturalSelectionCamouflage
                     return false;
             }
 
+            if (PageNumber == 6)
+            {
+                if (PredationEnabled)
+                {
+                    if (controlName == "Go" || controlName == "Go Once" || controlName == "Setup")
+                    {
+                        message = Language == Language.English ? Prompt6 : EsPrompt6;
+                        return false;
+                    }
+                }
+            }
+
             if (PageNumber == 7)
             {
                 // If mice are not all white when they press go prompt
-                if (controlName == "Go")
+                if (controlName == "Go" || controlName == "Go Once")
                 {
                     // In this case we have no white mice.
                     if (Data.aaMales.Value == 0 && Data.aaFemales.Value == 0)
                     {
-
+                        message = Language == Language.English ? Prompt7 : EsPrompt7;
+                        return false;
+                    }
+                    // In this case, we have any number of black mice.
+                    if (Data.AAMales.Value > 0 || Data.AaMales.Value > 0 || Data.AAFemales.Value > 0 || Data.AaFemales.Value > 0)
+                    {
+                        message = Language == Language.English ? Prompt7 : EsPrompt7;
+                        return false;
                     }
                 }
             }
 
             if (PageNumber == 8)
             {
-
+                // If mice are not all black when they press go prompt
+                if (controlName == "Go" || controlName == "Go Once")
+                {
+                    // In this case we have any number of white mice.
+                    if (Data.aaMales.Value > 0 || Data.aaFemales.Value > 0)
+                    {
+                        message = Language == Language.English ? Prompt8 : EsPrompt8;
+                        return false;
+                    }
+                    // In this case, we have any number of black mice.
+                    if (Data.AAMales.Value == 0 && Data.AaMales.Value == 0 && Data.AAFemales.Value == 0 && Data.AaFemales.Value == 0)
+                    {
+                        message = Language == Language.English ? Prompt8 : EsPrompt8;
+                        return false;
+                    }
+                }
             }
 
             return true;
         }
+
+        public static bool CheckInteraction(string controlName, out string message)
+        {
+            message = null;
+
+            if (TestGroup == 1)
+                return true;
+
+
+            bool returnValue = CheckInteractionHelper(controlName, out message);
+
+            string messageCopyForLambdaFunction = message;
+
+            if (returnValue)
+                return true;
+
+            if (TestGroup == 2 || TestGroup3Overrides[PageNumber])
+            {
+                AcceptDialog ad = new AcceptDialog();
+                ad.DialogText = message;
+                ad.WindowTitle = Language == Language.English ? "Reminder" : "Recordatorio";
+                Main.AddChild(ad);
+                ad.PopupCentered();
+                return false;
+            }
+
+            if (TestGroup == 3)
+            {
+                if (!returnValue)
+                {
+                    // First mistake
+                    if (PageMistakeCount[PageNumber] == 0)
+                    {
+                        AssistanceRequest ar = ((PackedScene)ResourceLoader.Load("res://AssistanceRequest.tscn")).Instance() as AssistanceRequest;
+                        Main.AddChild(ar);
+                        ar.PopupCentered();
+                        Main.AwaitPopupClosed(ar).ContinueWith(task =>
+                        {
+                            if (task.Result)
+                            {
+                                TestGroup3Overrides[PageNumber] = true;
+                                AcceptDialog ad = new AcceptDialog();
+                                ad.DialogText = messageCopyForLambdaFunction;
+                                ad.WindowTitle = Language == Language.English ? "Reminder" : "Recordatorio";
+                                Main.AddChild(ad);
+                                ad.PopupCentered();
+                            }
+                            else
+                            {
+                                PageMistakeCount[PageNumber]++;
+                            }
+                        });
+                        return false;
+                    }
+                    else
+                    {
+                        PageMistakeCount[PageNumber]++;
+                        // Reset counter after 3 mistakes so prompts keep happening
+                        if (PageMistakeCount[PageNumber] == 3)
+                            PageMistakeCount[PageNumber] = 0;
+                    }
+                }
+            }
+            return true;
+        }
+        
     }
 }

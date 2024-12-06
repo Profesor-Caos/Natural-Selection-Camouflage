@@ -37,13 +37,6 @@ public class Buttons : HBoxContainer, ILocalizable
             if (signal != null)
                 EmitSignal(signal);
         }
-        else
-        {
-            AcceptDialog ad = new AcceptDialog();
-            ad.DialogText = message;
-            this.AddChild(ad);
-            ad.PopupCentered();
-        }
     }
 
     private void OnSetupPressed()
@@ -97,11 +90,6 @@ public class Buttons : HBoxContainer, ILocalizable
         _toggling = true;
         predation.Pressed = !buttonPressed;
         _toggling = false;
-
-        AcceptDialog ad = new AcceptDialog();
-        ad.DialogText = message;
-        this.AddChild(ad);
-        ad.PopupCentered();
     }
 
     public void ResetDefaults()

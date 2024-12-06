@@ -123,12 +123,6 @@ public partial class SpinBoxSlider : VBoxContainer
             _updating = true;
 			SpinBox.Value = _value;
 			_updating = false;
-			// TODO: Make this a method somewhere probably...
-			AcceptDialog ad = new AcceptDialog();
-			ad.WindowTitle = "Remember";
-			ad.DialogText = message;
-			this.AddChild(ad);
-			ad.PopupCentered();
 			return;
 		}
 
@@ -201,10 +195,6 @@ public partial class SpinBoxSlider : VBoxContainer
 				Slider.Value = _value;
 				SpinBox.Value = _value;
 				_updating = false;
-				AcceptDialog ad = new AcceptDialog();
-				ad.DialogText = message;
-				this.AddChild(ad);
-				ad.PopupCentered();
 				_sliderChanged = false;
 				return;
 			}
