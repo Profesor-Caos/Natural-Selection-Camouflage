@@ -177,8 +177,7 @@ namespace NaturalSelectionCamouflage
                         {
                             if (task.Result)
                             {
-                                GD.Print("Yes Pressed");
-                                //TestGroup3Overrides[PageNumber] = true;
+                                TestGroup3Overrides[PageNumber] = true;
                                 AcceptDialog ad = new AcceptDialog();
                                 ad.DialogText = messageCopyForLambdaFunction;
                                 ad.WindowTitle = Language == Language.English ? "Reminder" : "Recordatorio";
@@ -187,8 +186,7 @@ namespace NaturalSelectionCamouflage
                             }
                             else
                             {
-                                GD.Print("No Pressed");
-                                //PageMistakeCount[PageNumber]++;
+                                PageMistakeCount[PageNumber]++;
                             }
                         });
                         return false;
