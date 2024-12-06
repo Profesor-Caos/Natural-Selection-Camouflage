@@ -26,7 +26,7 @@ config/icon="res://icon.png"
 
 [display]
 
-window/size/width=1620
+window/size/width=1662
 window/size/height=620
 
 [editor]

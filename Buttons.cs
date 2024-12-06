@@ -129,9 +129,9 @@ public class Buttons : HBoxContainer, ILocalizable
             go.Text = "Ir";
             predationEnabled.Text = "Depredación?";
             predationSlider.Label = "% de Probabilidad de Depredación";
-            setLightBackground.Text = "Establecer Fondo Claro";
-            setDarkBackground.Text = "Establecer Fondo Oscuro";
-            setMixedBackground.Text = "Establecer Fondo Mixto";
+            setLightBackground.Text = "Fondo Claro";
+            setDarkBackground.Text = "Fondo Oscuro";
+            setMixedBackground.Text = "Fondo Mixto";
             addAMutant.Text = "Agregar un Mutante";
         }
     }

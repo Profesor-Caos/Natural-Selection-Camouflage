@@ -16,8 +16,8 @@ public class Main : HBoxContainer, ILocalizable
     public int TestGroup { get; set; }
 
     public Queue<string> Logs = new Queue<string>();
-    private static float PROJECT_WIDTH = 1620.0f;
-    private static float PROJECT_HEIGHT = 600.0f;
+    private static float PROJECT_WIDTH = 1662.0f;
+    private static float PROJECT_HEIGHT = 620.0f;
 
     private int studentID = 1;
 
@@ -59,7 +59,6 @@ public class Main : HBoxContainer, ILocalizable
     {
         // Get the current window size
         Vector2 windowSize = GetViewport().Size;
-
         // Scale the root Control node based on window size
         // You can adjust these values to suit your design needs
         float scaleFactor = Mathf.Min(windowSize.x / PROJECT_WIDTH, windowSize.y / PROJECT_HEIGHT);
