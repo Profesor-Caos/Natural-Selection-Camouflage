@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-public class NavigationPage : HBoxContainer, ILocalizable
+public class NavigationPage : HBoxContainer, ILocalizable, ILogger
 {
     public event EventHandler<LogEventArgs> LogEvent;
 
@@ -16,6 +16,11 @@ public class NavigationPage : HBoxContainer, ILocalizable
     public void SubscribeLogger(EventHandler<LogEventArgs> handler)
     {
         this.LogEvent += handler;
+        foreach (Control page in Pages)
+        {
+            if (page is ILogger logger)
+                logger.LogEvent += handler;
+        }
     }
 
     private void OnBackButtonPressed()

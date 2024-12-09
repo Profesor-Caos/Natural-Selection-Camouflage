@@ -101,7 +101,14 @@ bbcode_text = "[center]Please explain how you figured out the answer to the prev
 text = "Please explain how you figured out the answer to the previous question."
 
 [node name="WrapTextEdit" parent="." instance=ExtResource( 1 )]
-margin_top = 172.0
+margin_top = 200.0
 margin_right = 500.0
-margin_bottom = 322.0
+margin_bottom = 350.0
 rect_min_size = Vector2( 500, 150 )
+
+[connection signal="pressed" from="AABox/Light" to="." method="OnLightPressed"]
+[connection signal="pressed" from="AABox/Dark" to="." method="OnDarkPressed"]
+[connection signal="pressed" from="AaBox/Light" to="." method="OnLight2Pressed"]
+[connection signal="pressed" from="AaBox/Dark" to="." method="OnDark2Pressed"]
+[connection signal="pressed" from="aaBox/Light" to="." method="OnLight3Pressed"]
+[connection signal="pressed" from="aaBox/Dark" to="." method="OnDark3Pressed"]

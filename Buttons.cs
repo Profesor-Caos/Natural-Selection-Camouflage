@@ -2,7 +2,7 @@
 using NaturalSelectionCamouflage;
 using System;
 
-public class Buttons : HBoxContainer, ILocalizable
+public class Buttons : HBoxContainer, ILocalizable, ILogger
 {
     public event EventHandler<LogEventArgs> LogEvent;
     

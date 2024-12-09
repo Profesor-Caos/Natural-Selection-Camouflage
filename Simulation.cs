@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Runtime;
 using static System.Net.Mime.MediaTypeNames;
 
-public class Simulation : Control, ILocalizable
+public class Simulation : Control, ILocalizable, ILogger
 {
 	private bool _isGoActive = false;
     public event EventHandler<LogEventArgs> LogEvent;

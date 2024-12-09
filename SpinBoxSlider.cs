@@ -2,7 +2,7 @@ using Godot;
 using NaturalSelectionCamouflage;
 using System;
 
-public partial class SpinBoxSlider : VBoxContainer
+public partial class SpinBoxSlider : VBoxContainer, ILogger
 {
 	public event EventHandler<LogEventArgs> LogEvent;
 
