@@ -10,26 +10,98 @@ script = ExtResource( 2 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
 margin_right = 500.0
-margin_bottom = 160.0
-rect_min_size = Vector2( 500, 160 )
+margin_bottom = 60.0
+rect_min_size = Vector2( 500, 60 )
 bbcode_enabled = true
-bbcode_text = "[center]There are two alleles \"A\" (dominant) and \"a\" (recessive). Based on your investigations so far, can you say what would the phenotype (fur color: light or dark) be of the three genotypes \"AA\", \"Aa\", and \"aa\"?
+bbcode_text = "[center]There are two alleles \"A\" (dominant) and \"a\" (recessive). Based on your investigations so far, can you say what would the phenotype (fur color: light or dark) be of the three genotypes \"AA\", \"Aa\", and \"aa\"?"
+text = "There are two alleles \"A\" (dominant) and \"a\" (recessive). Based on your investigations so far, can you say what would the phenotype (fur color: light or dark) be of the three genotypes \"AA\", \"Aa\", and \"aa\"?"
 
-AA: Light or Dark
-Aa: Light or Dark
-aa: Light or Dark
+[node name="AABox" type="HBoxContainer" parent="."]
+margin_top = 64.0
+margin_right = 500.0
+margin_bottom = 88.0
+alignment = 1
 
-Please explain how you figured out the answer to the previous question."
-text = "There are two alleles \"A\" (dominant) and \"a\" (recessive). Based on your investigations so far, can you say what would the phenotype (fur color: light or dark) be of the three genotypes \"AA\", \"Aa\", and \"aa\"?
+[node name="AA" type="Label" parent="AABox"]
+margin_left = 177.0
+margin_top = 5.0
+margin_right = 199.0
+margin_bottom = 19.0
+text = "AA:"
 
-AA: Light or Dark
-Aa: Light or Dark
-aa: Light or Dark
+[node name="Light" type="CheckBox" parent="AABox"]
+margin_left = 203.0
+margin_right = 262.0
+margin_bottom = 24.0
+text = "Light"
 
-Please explain how you figured out the answer to the previous question."
+[node name="Dark" type="CheckBox" parent="AABox"]
+margin_left = 266.0
+margin_right = 323.0
+margin_bottom = 24.0
+text = "Dark"
+
+[node name="AaBox" type="HBoxContainer" parent="."]
+margin_top = 92.0
+margin_right = 500.0
+margin_bottom = 116.0
+alignment = 1
+
+[node name="Aa" type="Label" parent="AaBox"]
+margin_left = 178.0
+margin_top = 5.0
+margin_right = 198.0
+margin_bottom = 19.0
+text = "Aa:"
+
+[node name="Light" type="CheckBox" parent="AaBox"]
+margin_left = 202.0
+margin_right = 261.0
+margin_bottom = 24.0
+text = "Light"
+
+[node name="Dark" type="CheckBox" parent="AaBox"]
+margin_left = 265.0
+margin_right = 322.0
+margin_bottom = 24.0
+text = "Dark"
+
+[node name="aaBox" type="HBoxContainer" parent="."]
+margin_top = 120.0
+margin_right = 500.0
+margin_bottom = 144.0
+alignment = 1
+
+[node name="aa" type="Label" parent="aaBox"]
+margin_left = 179.0
+margin_top = 5.0
+margin_right = 197.0
+margin_bottom = 19.0
+text = "aa:"
+
+[node name="Light" type="CheckBox" parent="aaBox"]
+margin_left = 201.0
+margin_right = 260.0
+margin_bottom = 24.0
+text = "Light"
+
+[node name="Dark" type="CheckBox" parent="aaBox"]
+margin_left = 264.0
+margin_right = 321.0
+margin_bottom = 24.0
+text = "Dark"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+margin_top = 148.0
+margin_right = 500.0
+margin_bottom = 168.0
+rect_min_size = Vector2( 0, 20 )
+bbcode_enabled = true
+bbcode_text = "[center]Please explain how you figured out the answer to the previous question."
+text = "Please explain how you figured out the answer to the previous question."
 
 [node name="WrapTextEdit" parent="." instance=ExtResource( 1 )]
-margin_top = 164.0
+margin_top = 172.0
 margin_right = 500.0
-margin_bottom = 314.0
+margin_bottom = 322.0
 rect_min_size = Vector2( 500, 150 )
