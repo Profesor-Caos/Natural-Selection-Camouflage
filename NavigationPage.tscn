@@ -12,12 +12,18 @@ margin_right = 42.0
 margin_bottom = 659.0
 text = "Back"
 
-[node name="Content" type="CenterContainer" parent="."]
+[node name="Content" type="PanelContainer" parent="."]
 margin_left = 46.0
 margin_right = 1063.0
 margin_bottom = 659.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="Content"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1010.0
+margin_bottom = 652.0
 
 [node name="NextButton" type="ToolButton" parent="."]
 margin_left = 1067.0

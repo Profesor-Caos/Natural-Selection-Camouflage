@@ -25,7 +25,7 @@ public class NavigationPage : HBoxContainer, ILocalizable
 
         LogTextChange();
 
-        CenterContainer content = GetNode<CenterContainer>("Content");
+        CenterContainer content = GetNode<CenterContainer>("Content/CenterContainer");
         content.RemoveChild(Pages[CurrentPageIndex--]);
         content.AddChild(Pages[CurrentPageIndex]);
 
@@ -40,7 +40,7 @@ public class NavigationPage : HBoxContainer, ILocalizable
 
         LogTextChange();
 
-        CenterContainer content = GetNode<CenterContainer>("Content");
+        CenterContainer content = GetNode<CenterContainer>("Content/CenterContainer");
         content.RemoveChild(Pages[CurrentPageIndex++]);
         content.AddChild(Pages[CurrentPageIndex]);
 
@@ -106,7 +106,7 @@ public class NavigationPage : HBoxContainer, ILocalizable
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        CenterContainer content = GetNode<CenterContainer>("Content");
+        CenterContainer content = GetNode<CenterContainer>("Content/CenterContainer");
 
         int pageCount = 11;
         for (int i = 1; i <= pageCount; i++)
