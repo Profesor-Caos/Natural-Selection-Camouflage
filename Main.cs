@@ -107,6 +107,8 @@ public class Main : HBoxContainer, ILocalizable
 
         _openingSceneInstance = _openingScene.Instance() as OpeningScreen;
         _openingSceneInstance.Finished += _openingSceneInstance_Finished;
+        _openingSceneInstance.WaitStarted += (x,y) => this.MouseDefaultCursorShape = CursorShape.Wait;
+        _openingSceneInstance.WaitFinished += (x, y) => this.MouseDefaultCursorShape = CursorShape.Arrow;
         GetParent().CallDeferred("add_child", _openingSceneInstance);
     }
 

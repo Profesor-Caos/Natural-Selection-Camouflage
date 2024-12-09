@@ -57,4 +57,5 @@ text = "Submit"
 [connection signal="pressed" from="LanguageChoices/English" to="." method="OnEnglishPressed"]
 [connection signal="pressed" from="LanguageChoices/Spanish" to="." method="OnSpanishPressed"]
 [connection signal="text_changed" from="StudentID" to="." method="OnStudentIDTextChanged"]
+[connection signal="text_entered" from="StudentID" to="." method="OnStudentIDTextEntered"]
 [connection signal="pressed" from="Submit" to="." method="OnSubmitPressed"]

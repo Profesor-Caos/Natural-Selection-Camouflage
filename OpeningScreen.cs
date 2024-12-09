@@ -6,9 +6,11 @@ using System.Runtime.Remoting.Messaging;
 using System.Security.Policy;
 using Godot.Collections;
 
-public class OpeningScreen : VBoxContainer, ILocalizable
+public class OpeningScreen : VBoxContainer, ILocalizable, IWait
 {
     public event EventHandler Finished;
+    public event EventHandler<EventArgs> WaitStarted;
+    public event EventHandler<EventArgs> WaitFinished;
     public Language Language;
     public int StudentID;
     private bool _isSubmitting = false;
@@ -46,6 +48,11 @@ public class OpeningScreen : VBoxContainer, ILocalizable
         }
     }
 
+    private void OnStudentIDTextEntered(string newText)
+    {
+        OnSubmitPressed();
+    }
+
     private void OnRequestCompleted(int result, int responseCode, string[] headers, byte[] body, object request)
     {
         (request as HTTPRequest).QueueFree();
@@ -55,6 +62,8 @@ public class OpeningScreen : VBoxContainer, ILocalizable
 
         GD.Print("Response Code: ", responseCode);
         GD.Print("Response: ", responseText);
+
+        this.WaitFinished?.Invoke(this, EventArgs.Empty);
 
         // TODO: wrap in try and if errors happen, select a random test group and log it...
         if (responseCode == 200)
@@ -80,6 +89,9 @@ public class OpeningScreen : VBoxContainer, ILocalizable
             this.AddChild(ad);
             ad.PopupCentered();
             _isSubmitting = false;
+            GetNode<LineEdit>("StudentID").Editable = true;
+            GetNode<CheckBox>("LanguageChoices/Spanish").Disabled = false;
+            GetNode<CheckBox>("LanguageChoices/English").Disabled = false;
             return;
         }
     }
@@ -94,6 +106,10 @@ public class OpeningScreen : VBoxContainer, ILocalizable
 
     private void OnSubmitPressed()
     {
+        Button submitButton = GetNode<Button>("Submit");
+        if (submitButton.Disabled)
+            return;
+
         LineEdit editor = GetNode<LineEdit>("StudentID");
         // Special codes for testing that skip the server check.
         if (editor.Text == "444444" || editor.Text == "555555" || editor.Text == "666666")
@@ -111,8 +127,11 @@ public class OpeningScreen : VBoxContainer, ILocalizable
         if (err != Error.Ok)
             GD.PrintErr("Failed to submit request to server: ", err);
 
-        Button submitButton = GetNode<Button>("Submit");
         submitButton.Disabled = true;
+        editor.Editable = false;
+        GetNode<CheckBox>("LanguageChoices/Spanish").Disabled = true;
+        GetNode<CheckBox>("LanguageChoices/English").Disabled = true;
+        this.WaitStarted?.Invoke(this, EventArgs.Empty);
         _isSubmitting = true;
     }
 
