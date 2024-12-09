@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://NavigationPage.cs" type="Script" id=1]
+[ext_resource path="res://NavigationPage.tres" type="Theme" id=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.933333, 0.933333, 0.933333, 1 )
 
 [node name="NavigationPage" type="HBoxContainer"]
 margin_right = 1109.0
@@ -18,12 +22,12 @@ margin_right = 1063.0
 margin_bottom = 659.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = ExtResource( 2 )
+custom_styles/panel = SubResource( 1 )
 
 [node name="CenterContainer" type="CenterContainer" parent="Content"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1010.0
-margin_bottom = 652.0
+margin_right = 1017.0
+margin_bottom = 659.0
 
 [node name="NextButton" type="ToolButton" parent="."]
 margin_left = 1067.0
