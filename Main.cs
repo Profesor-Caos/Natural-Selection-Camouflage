@@ -1,7 +1,8 @@
-using Godot;
+﻿using Godot;
 using NaturalSelectionCamouflage;
 using System;
 using System.Collections.Generic;
+using Timer = System.Timers.Timer;
 
 public class Main : HBoxContainer, ILocalizable
 {
@@ -26,11 +27,33 @@ public class Main : HBoxContainer, ILocalizable
     private string URL = "https://nscbackend.onrender.com";
     private string[] Headers = { "Content-Type: application/json" };
 
+    private Timer _page3Timer;
+
     private void OnNavigationPageNavigationButtonPressed()
     {
         int pageNumber = GetNode<NavigationPage>("NavigationPage").CurrentPageIndex;
         GetNode<Simulation>("Simulation").SelectedPage = pageNumber;
         InteractionStatus.PageNumber = pageNumber;
+        if (pageNumber == 2)
+        {
+            _page3Timer = new Timer(60 * 1000 * 3); // 3 minutes
+            _page3Timer.Elapsed += _page3Timer_Elapsed;
+            _page3Timer.AutoReset = false;
+            _page3Timer.Enabled = true;
+        }
+        else if (_page3Timer != null)
+        {
+            _page3Timer.Dispose();
+        }
+    }
+
+    private void _page3Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+    {
+        AcceptDialog ad = new AcceptDialog();
+        ad.DialogText = Language == Language.English ? "Don't forget to move on to the next page to continue learning." : "No olvides pasar a la siguiente página para seguir aprendiendo.";
+        ad.WindowTitle = Language == Language.English ? "Reminder" : "Recordatorio";
+        AddChild(ad);
+        ad.PopupCentered();
     }
 
     private void OnRequestCompleted(int result, int responseCode, string[] headers, byte[] body, object request)

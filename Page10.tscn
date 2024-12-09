@@ -94,16 +94,16 @@ text = "Dark"
 [node name="RichTextLabel2" type="RichTextLabel" parent="."]
 margin_top = 148.0
 margin_right = 500.0
-margin_bottom = 168.0
-rect_min_size = Vector2( 0, 20 )
+margin_bottom = 178.0
+rect_min_size = Vector2( 0, 30 )
 bbcode_enabled = true
 bbcode_text = "[center]Please explain how you figured out the answer to the previous question."
 text = "Please explain how you figured out the answer to the previous question."
 
 [node name="WrapTextEdit" parent="." instance=ExtResource( 1 )]
-margin_top = 200.0
+margin_top = 182.0
 margin_right = 500.0
-margin_bottom = 350.0
+margin_bottom = 332.0
 rect_min_size = Vector2( 500, 150 )
 
 [connection signal="pressed" from="AABox/Light" to="." method="OnLightPressed"]

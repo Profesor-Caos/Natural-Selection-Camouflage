@@ -98,6 +98,7 @@ public partial class SpinBoxSlider : VBoxContainer, ILogger
 		}
 	}
 
+	private string _defaultLabel;
 	private string _label;
 	[Export]
 	public string Label
@@ -106,6 +107,8 @@ public partial class SpinBoxSlider : VBoxContainer, ILogger
 		set
 		{
 			_label = value;
+			if (_defaultLabel == null)
+				_defaultLabel = value;
 			Label label = GetNode<Label>($"{nameof(HBoxContainer)}/{nameof(Label)}");
 			label.Text = value;
 		}
@@ -119,7 +122,7 @@ public partial class SpinBoxSlider : VBoxContainer, ILogger
 		string message;
 		if (!InteractionStatus.CheckInteraction(Label, out message))
         {
-            LogEvent?.Invoke(this, new LogEventArgs(DateTime.Now, $"{Label} value was attempted to be changed to {SpinBox.Value}."));
+            LogEvent?.Invoke(this, new LogEventArgs(DateTime.Now, $"{_defaultLabel} value was attempted to be changed to {SpinBox.Value}."));
             _updating = true;
 			SpinBox.Value = _value;
 			_updating = false;
@@ -131,7 +134,7 @@ public partial class SpinBoxSlider : VBoxContainer, ILogger
 		Slider.Value = _value;
 		_updating = false;
 
-		LogEvent?.Invoke(this, new LogEventArgs(DateTime.Now, $"{Label} value changed to {value}."));
+		LogEvent?.Invoke(this, new LogEventArgs(DateTime.Now, $"{_defaultLabel} value changed to {value}."));
 	}
 
 	private void OnHSliderDragEnded(bool value_changed)
@@ -190,7 +193,7 @@ public partial class SpinBoxSlider : VBoxContainer, ILogger
             string message;
 			if (!InteractionStatus.CheckInteraction(Label, out message))
 			{
-                LogEvent?.Invoke(this, new LogEventArgs(DateTime.Now, $"{Label} value was attempted to be changed to {Slider.Value}."));
+                LogEvent?.Invoke(this, new LogEventArgs(DateTime.Now, $"{_defaultLabel} value was attempted to be changed to {Slider.Value}."));
                 _updating = true;
 				Slider.Value = _value;
 				SpinBox.Value = _value;
@@ -202,7 +205,7 @@ public partial class SpinBoxSlider : VBoxContainer, ILogger
 			_value = (int)Slider.Value;
 			_sliderChanged = false;
 
-            LogEvent?.Invoke(this, new LogEventArgs(DateTime.Now, $"{Label} value changed to {_value}."));
+            LogEvent?.Invoke(this, new LogEventArgs(DateTime.Now, $"{_defaultLabel} value changed to {_value}."));
 
             return;
 		}
