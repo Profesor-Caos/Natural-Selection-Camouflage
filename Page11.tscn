@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Page11.cs" type="Script" id=1]
+
+[node name="Page11" type="RichTextLabel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1162.0
+margin_bottom = -220.0
+rect_min_size = Vector2( 500, 400 )
+bbcode_enabled = true
+bbcode_text = "
+
+[center]Finished:
+
+Raise your hand!"
+text = "
+
+Finished:
+
+Raise your hand!"
+script = ExtResource( 1 )

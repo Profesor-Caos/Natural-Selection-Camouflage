@@ -10,6 +10,8 @@ public class Main : HBoxContainer, ILocalizable
 
     public event EventHandler<AssistanceRequestEventArgs> PopupClosed;
 
+    private DateTime _startTime;
+
     public Simulation Simulation { get { return this.GetNode<Simulation>("Simulation"); } }
 
     public Language Language { get; set; }
@@ -62,12 +64,15 @@ public class Main : HBoxContainer, ILocalizable
     {
         string url = URL + "/logs";
 
-        string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+        DateTime now = DateTime.Now;
+        string timestamp = now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+        TimeSpan difference = now - _startTime;
 
         var logEntry = new Godot.Collections.Dictionary<string, object>
         {
             { "StudentID", StudentID },
             { "Timestamp", timestamp },
+            { "TimePassed", $"{difference.Hours}:{difference.Minutes}:{difference.Seconds}.{difference.Milliseconds:D3}" },
             { "PageNumber", GetNode<NavigationPage>("NavigationPage").CurrentPageIndex + 1 },
             { "LogData", logData }
         };
@@ -118,6 +123,8 @@ public class Main : HBoxContainer, ILocalizable
             this.Language = _openingSceneInstance.Language;
             this.TestGroup = _openingSceneInstance.TestGroup;
             this.StudentID = _openingSceneInstance.StudentID;
+            this._startTime = DateTime.Now;
+            this.CreateLog("Student submitted StudentID");
             InteractionStatus.Language = this.Language;
             InteractionStatus.TestGroup = this.TestGroup;
             InteractionStatus.Main = this;

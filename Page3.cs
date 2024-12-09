@@ -7,11 +7,11 @@ public class Page3 : RichTextLabel, ILocalizable
     {
         if (language == Language.English)
         {
-            this.BbcodeText = "[center][b]The Rock Pocket Mice Simulation Environment:[/b]\n\nIn this simulation, there are mice with two types of fur coat colors: light and dark.\n\n[b]●[/b] What you can see like fur color are referred to as [i]phenotypes[/i], which are determined by the genes that a mouse has. There are two kinds of genes in this simulation that change the fur coat color of mice.\n\n[b]●[/b]  In this simulation, \"AA\", \"Aa\", and \"aa\" are genotypes (genetic makeup) of mice. The fur coat color of a mouse is dependent on its genotype. \n\nEach clock tick in the simulation is a mouse generation. In each generation, male and female mice move around randomly, search for a partner, and reproduce if they find a partner. [/center]";
+            this.BbcodeText = "[center]\n[b]Exploration[/b]\n\nNow, play around with the simulation. It is totally okay if you don't understand everything mentioned in the simulation. Just explore it for a few minutes, then go to the next page!";
         }
         else if (language == Language.Spanish)
         {
-            this.BbcodeText = "[center][b]El Entorno de Simulación de Ratones de Bolsillo Rocosos:[/b]\n\nEn esta simulación, hay ratones con dos tipos de colores de pelaje: claro y oscuro.\n\n[b]●[/b] Lo que puedes ver como el color del pelaje se conoce como [i]fenotipos[/i], que están determinados por los genes que tiene un ratón. Hay dos tipos de genes en esta simulación que cambian el color del pelaje de los ratones.\n\n[b]●[/b] En esta simulación, \"AA\", \"Aa\" y \"aa\" son genotipos (composición genética) de los ratones. El color del pelaje de un ratón depende de su genotipo.\n\nCada tic del reloj en la simulación es una generación de ratones. En cada generación, los ratones macho y hembra se mueven al azar, buscan una pareja y se reproducen si encuentran una pareja.\n[/center]";
+            this.BbcodeText = "[center][b]Exploración[/b]\n\nAhora, juega con la simulación. Está totalmente bien si no entiendes todo lo mencionado en la simulación. ¡Simplemente explórala durante unos minutos, luego pasa a la siguiente página!";
         }
     }
 

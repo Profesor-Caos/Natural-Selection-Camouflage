@@ -1,7 +1,8 @@
 ﻿using Godot;
 using System;
+using System.Collections.Generic;
 
-public class Page1 : VBoxContainer, ILocalizable
+public class Page1 : VBoxContainer, ILocalizable, ITextResponse
 {
     public void Localize(Language language)
     {
@@ -15,6 +16,12 @@ public class Page1 : VBoxContainer, ILocalizable
         {
             label.BbcodeText = "[center]Presiona el botón \"Configurar\" de la simulación. Describe lo que ves en esta simulación.[/center]";
         }
+    }
+
+    public List<string> GetResponses()
+    {
+        WrapTextEdit text = GetNode<WrapTextEdit>(nameof(WrapTextEdit));
+        return new List<string> { text.Text };
     }
 
     // Called when the node enters the scene tree for the first time.

@@ -1,7 +1,8 @@
 ﻿using Godot;
 using System;
+using System.Collections.Generic;
 
-public class Page4 : VBoxContainer, ILocalizable
+public class Page4 : VBoxContainer, ILocalizable, ITextResponse
 {
     public void Localize(Language language)
     {
@@ -15,6 +16,12 @@ public class Page4 : VBoxContainer, ILocalizable
         {
             label.BbcodeText = "[center]Cambia los deslizadores bajo \"Configuración Inicial\" en la simulación. Intenta cambiar la configuración de manera que todos los ratones tengan pelaje de color claro. Una vez que obtengas todos los ratones con pelaje claro, describe la configuración inicial que usaste.\n\nAsegúrate de que cada vez que cambies los deslizadores presiones CONFIGURAR después para que puedas ver realmente los efectos de tu nueva configuración.\n[/center]";
         }
+    }
+
+    public List<string> GetResponses()
+    {
+        WrapTextEdit text = GetNode<WrapTextEdit>(nameof(WrapTextEdit));
+        return new List<string> { text.Text };
     }
 
     // Called when the node enters the scene tree for the first time.

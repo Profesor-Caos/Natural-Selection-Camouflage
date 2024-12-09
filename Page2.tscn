@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Page2.cs" type="Script" id=1]
 
-[node name="RichTextLabel" type="RichTextLabel"]
+[node name="Page2" type="RichTextLabel"]
 margin_right = 40.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 500, 400 )

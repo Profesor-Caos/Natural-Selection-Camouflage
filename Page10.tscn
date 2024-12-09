@@ -3,7 +3,7 @@
 [ext_resource path="res://WrapTextEdit.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Page10.cs" type="Script" id=2]
 
-[node name="Page4" type="VBoxContainer"]
+[node name="Page10" type="VBoxContainer"]
 margin_right = 400.0
 margin_bottom = 400.0
 script = ExtResource( 2 )

@@ -1,7 +1,8 @@
 ﻿using Godot;
 using System;
+using System.Collections.Generic;
 
-public class Page8 : VBoxContainer, ILocalizable
+public class Page8 : VBoxContainer, ILocalizable, ITextResponse
 {
     public void Localize(Language language)
     {
@@ -21,6 +22,13 @@ public class Page8 : VBoxContainer, ILocalizable
             label2.BbcodeText = "[center]\n¿Qué predices que sucederá después de muchas generaciones si la población inicial de ratones tiene todo el pelaje de color claro?";
             label3.BbcodeText = "[center]Realiza un experimento para probar o refutar tu respuesta a la pregunta anterior y explica tus observaciones.";
         }
+    }
+
+    public List<string> GetResponses()
+    {
+        WrapTextEdit text = GetNode<WrapTextEdit>(nameof(WrapTextEdit));
+        WrapTextEdit text2 = GetNode<WrapTextEdit>(nameof(WrapTextEdit)+"2");
+        return new List<string> { text.Text, text2.Text };
     }
 
     // Called when the node enters the scene tree for the first time.

@@ -4,7 +4,7 @@
 [ext_resource path="res://resources/page9.png" type="Texture" id=2]
 [ext_resource path="res://Page9.cs" type="Script" id=3]
 
-[node name="VBoxContainer" type="VBoxContainer"]
+[node name="Page9" type="VBoxContainer"]
 margin_right = 40.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 500, 200 )

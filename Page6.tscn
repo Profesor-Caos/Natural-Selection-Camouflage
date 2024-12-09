@@ -3,7 +3,7 @@
 [ext_resource path="res://resources/page6.png" type="Texture" id=1]
 [ext_resource path="res://Page6.cs" type="Script" id=2]
 
-[node name="VBoxContainer" type="VBoxContainer"]
+[node name="Page6" type="VBoxContainer"]
 margin_right = 500.0
 rect_min_size = Vector2( 500, 200 )
 script = ExtResource( 2 )
