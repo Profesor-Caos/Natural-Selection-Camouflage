@@ -1,8 +1,10 @@
 ﻿using Godot;
 using System;
 
-public class Page3 : RichTextLabel, ILocalizable
+public class Page3 : RichTextLabel, ILocalizable, IPage
 {
+    public new string Name { get { return nameof(Page3); } }
+
     public void Localize(Language language)
     {
         if (language == Language.English)

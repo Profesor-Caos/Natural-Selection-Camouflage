@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 
-public class Page8 : VBoxContainer, ILocalizable, ITextResponse
+public class Page8 : VBoxContainer, ILocalizable, ITextResponse, IPage
 {
+    public new string Name { get {  return nameof(Page8); } }
+
     public void Localize(Language language)
     {
         RichTextLabel label = GetNode<RichTextLabel>("RichTextLabel");

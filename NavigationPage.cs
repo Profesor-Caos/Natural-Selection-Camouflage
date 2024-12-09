@@ -56,7 +56,7 @@ public class NavigationPage : HBoxContainer, ILocalizable
             List<string> responses = textResponse.GetResponses();
             for (int i = 0; i < responses.Count; i++)
             {
-                string key = currentPage.Name + " text box " + (i + 1);
+                string key = (currentPage as IPage).Name + " text box " + (i + 1);
                 string updatedText = responses[i];
                 if (Text[key] != updatedText)
                 {
@@ -75,7 +75,7 @@ public class NavigationPage : HBoxContainer, ILocalizable
             List<string> responses = textResponse.GetResponses();
             for (int i = 0; i < responses.Count; i++)
             {
-                Text.Add(page.Name + " text box " + (i + 1), responses[i]);
+                Text.Add((page as IPage).Name + " text box " + (i + 1), responses[i]);
             }
         }
     }

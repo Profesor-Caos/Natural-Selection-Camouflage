@@ -1,8 +1,10 @@
 ﻿using Godot;
 using System;
 
-public class Page5 : VBoxContainer, ILocalizable
+public class Page5 : VBoxContainer, ILocalizable, IPage
 {
+    public new string Name { get { return nameof(Page5); } }
+
     public void Localize(Language language)
     {
         RichTextLabel label = GetNode<RichTextLabel>("RichTextLabel");
