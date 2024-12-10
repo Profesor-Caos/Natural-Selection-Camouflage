@@ -11,12 +11,17 @@ public class Page7 : VBoxContainer, ILocalizable, IPage
 
         if (language == Language.English)
         {
-            label.BbcodeText = "[center]Next, you will make some predictions and test your predictions by exploring the simulation. \n\nWhile answering the following questions, make sure that the \"PREDATION?\" box is unchecked.\n\nMake sure you press SETUP after unchecking the \"predation?\" box.";
+            label.BbcodeText = "[center]Next, you will make some predictions and test your predictions by exploring the simulation. \n\nWhile answering the following questions, make sure that the \"Predation?\" box is unchecked.\n\nMake sure you press SETUP after unchecking the \"Predation?\" box.";
         }
         else if (language == Language.Spanish)
         {
-            label.BbcodeText = "[center]A continuación, harás algunas predicciones y probarás tus predicciones explorando la simulación. \n\nAl responder las siguientes preguntas, asegúrate de que la casilla \"¿DEPREDACIÓN?\" esté desmarcada.\n\nAsegúrate de presionar CONFIGURAR después de desmarcar la casilla \"¿depredación?\".";
+            label.BbcodeText = "[center]A continuación, harás algunas predicciones y probarás tus predicciones explorando la simulación. \n\nAl responder las siguientes preguntas, asegúrate de que la casilla \"Depredación?\" esté desmarcada.\n\nAsegúrate de presionar CONFIGURAR después de desmarcar la casilla \"Depredación?\".";
         }
+    }
+
+    public bool CanAdvance()
+    {
+        return true;
     }
 
     // Called when the node enters the scene tree for the first time.

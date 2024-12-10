@@ -20,6 +20,12 @@ public class Page4 : VBoxContainer, ILocalizable, ITextResponse, IPage
         }
     }
 
+    public bool CanAdvance()
+    {
+        WrapTextEdit text = GetNode<WrapTextEdit>(nameof(WrapTextEdit));
+        return (text.Text.Length > 0 && !String.IsNullOrWhiteSpace(text.Text));
+    }
+
     public List<string> GetResponses()
     {
         WrapTextEdit text = GetNode<WrapTextEdit>(nameof(WrapTextEdit));

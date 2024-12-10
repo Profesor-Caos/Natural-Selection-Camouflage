@@ -7,4 +7,6 @@ using System.Threading.Tasks;
 internal interface IPage
 {
     string Name { get; }
+
+    bool CanAdvance();
 }

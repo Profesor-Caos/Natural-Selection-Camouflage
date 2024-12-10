@@ -43,6 +43,10 @@ public class NavigationPage : HBoxContainer, ILocalizable, ILogger
         if (CurrentPageIndex == Pages.Count - 1)
             return;
 
+        Control currentPage = Pages[CurrentPageIndex];
+        if (currentPage is IPage page && !page.CanAdvance())
+            return;
+
         LogTextChange();
 
         CenterContainer content = GetNode<CenterContainer>("Content/CenterContainer");

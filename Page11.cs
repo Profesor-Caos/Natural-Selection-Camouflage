@@ -17,6 +17,11 @@ public class Page11 : RichTextLabel, ILocalizable, IPage
         }
     }
 
+    public bool CanAdvance()
+    {
+        return true;
+    }
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {

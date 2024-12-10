@@ -43,6 +43,21 @@ public class Page10 : VBoxContainer, ILocalizable, ITextResponse, IPage, ILogger
         }
     }
 
+    public bool CanAdvance()
+    {
+        WrapTextEdit text = GetNode<WrapTextEdit>(nameof(WrapTextEdit));
+        CheckBox light = GetNode<CheckBox>("AABox/Light");
+        CheckBox light2 = GetNode<CheckBox>("AaBox/Light");
+        CheckBox light3 = GetNode<CheckBox>("aaBox/Light");
+        CheckBox dark = GetNode<CheckBox>("AABox/Dark");
+        CheckBox dark2 = GetNode<CheckBox>("AaBox/Dark");
+        CheckBox dark3 = GetNode<CheckBox>("aaBox/Dark");
+        return (text.Text.Length > 0 && !String.IsNullOrWhiteSpace(text.Text)
+            && (light.Pressed ^ dark.Pressed)
+            && (light2.Pressed ^ dark2.Pressed)
+            && (light3.Pressed ^ dark3.Pressed));
+    }
+
     public List<string> GetResponses()
     {
         WrapTextEdit text = GetNode<WrapTextEdit>(nameof(WrapTextEdit));
